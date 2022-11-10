@@ -18,13 +18,20 @@ public class StorePage extends BasePage {
         driver.findElement(searchFld).sendKeys(txt);
         return this;
     }
+    public StorePage search(String txt) throws InterruptedException {
+        Thread.sleep(2000);
+        driver.findElement(searchFld).sendKeys(txt);
+        driver.findElement(searchBtn).click();
+        return this;
+    }
 
     public StorePage clickSearchBtn(){
         driver.findElement(searchBtn).click();
         return this;
     }
 
-    public String getTitle(){
+    public String getTitle() throws InterruptedException {
+        Thread.sleep(2000);
         return driver.findElement(title).getText();
     }
 
