@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.selenium.pom.base.BaseTest;
+import org.selenium.pom.pages.CartPage;
+import org.selenium.pom.pages.CheckoutPage;
 import org.selenium.pom.pages.HomePage;
 import org.selenium.pom.pages.StorePage;
 import org.testng.Assert;
@@ -22,28 +24,12 @@ public class MyFirstTestCase extends BaseTest {
         Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
         Thread.sleep(2000);
         storePage.clickAddToCartBtn("Blue Shoes");
-
-
-        /*
-        driver.findElement(By.cssSelector("#menu-item-1227 > a")).click();
         Thread.sleep(2000);
-        driver.findElement(By.id("woocommerce-product-search-field-0")).sendKeys("Blue");
-        driver.findElement(By.cssSelector("button[value='Search']")).click();
-        Thread.sleep(2000);
-        Assert.assertEquals(driver.findElement(By.cssSelector(".woocommerce-products-header__title.page-title")).getText(),
-                "Search results: “Blue”"); //to check if search functionality works correct - search page should loaded
+        CartPage cartPage = storePage.clickViewCart();
+        Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
 
+        CheckoutPage checkoutPage = cartPage.clickCheckoutBtn();
 
-        driver.findElement(By.cssSelector("a[aria-label='Add “Blue Shoes” to your cart']")).click();
-        a[aria-label='Add “Blue” to your cart']
-
-         */
-
-        Thread.sleep(2000);
-        driver.findElement(By.cssSelector("a[title='View cart']")).click();
-        Assert.assertEquals(driver.findElement(By.cssSelector("td[class='product-name'] a")).getText(),
-                "Blue Shoes");
-        driver.findElement(By.cssSelector(".checkout-button")).click();
         driver.findElement(By.id("billing_first_name")).sendKeys("demo");
         driver.findElement(By.id("billing_last_name")).sendKeys("user");
         driver.findElement(By.id("billing_address_1")).sendKeys("San Francisco");
