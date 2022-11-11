@@ -11,7 +11,7 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
-    public StorePage clickStoreMenuLink() throws InterruptedException {
+    public StorePage navigateToStoreUsingMenu() throws InterruptedException {
         Thread.sleep(2000);
         driver.findElement(storeMenuLink).click();
         return new StorePage(driver); // navigate to other page - the same in all websites (fluent interface)
