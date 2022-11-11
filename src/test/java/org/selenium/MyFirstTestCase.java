@@ -13,7 +13,6 @@ public class MyFirstTestCase extends BaseTest {
 
     @Test
     public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException {
-        //System.setProperty("webdriver.chrome.driver", "E:\\JavaProjects\\MasterSeleniumFramework\\chromedriver.exe");
         driver.get("https://askomdch.com");
         HomePage homePage = new HomePage(driver);
         StorePage storePage = homePage.clickStoreMenuLink();
@@ -21,7 +20,8 @@ public class MyFirstTestCase extends BaseTest {
                /* enterTextInSearchFld("Blue").
                 clickSearchBtn();*/
         Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
-        storePage.clickAddToCartBtn();
+        Thread.sleep(2000);
+        storePage.clickAddToCartBtn("Blue Shoes");
 
 
         /*
@@ -32,9 +32,13 @@ public class MyFirstTestCase extends BaseTest {
         Thread.sleep(2000);
         Assert.assertEquals(driver.findElement(By.cssSelector(".woocommerce-products-header__title.page-title")).getText(),
                 "Search results: “Blue”"); //to check if search functionality works correct - search page should loaded
-         */
+
 
         driver.findElement(By.cssSelector("a[aria-label='Add “Blue Shoes” to your cart']")).click();
+        a[aria-label='Add “Blue” to your cart']
+
+         */
+
         Thread.sleep(2000);
         driver.findElement(By.cssSelector("a[title='View cart']")).click();
         Assert.assertEquals(driver.findElement(By.cssSelector("td[class='product-name'] a")).getText(),
@@ -50,6 +54,7 @@ public class MyFirstTestCase extends BaseTest {
         Thread.sleep(2000);
         Assert.assertEquals(driver.findElement(By.cssSelector(".woocommerce-notice")).getText(),
                 "Thank you. Your order has been received.");
+
     }
 
     @Test
