@@ -8,4 +8,8 @@ public class BasePage { //for common objects
     public BasePage(WebDriver driver) {
         this.driver = driver;
     }
+
+    public void load(String endPoint) {
+        driver.get("https://askomdch.com" + endPoint);
+    }
 }
