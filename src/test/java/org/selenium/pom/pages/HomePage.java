@@ -11,6 +11,11 @@ public class HomePage extends BasePage {
         super(driver);
     }
 
+    public HomePage load(){
+        load("/");
+        return this;
+    }
+
     public StorePage navigateToStoreUsingMenu() throws InterruptedException {
         Thread.sleep(2000);
         driver.findElement(storeMenuLink).click();
