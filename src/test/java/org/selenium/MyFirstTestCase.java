@@ -1,30 +1,23 @@
 package org.selenium;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.pages.CartPage;
 import org.selenium.pom.pages.CheckoutPage;
 import org.selenium.pom.pages.HomePage;
 import org.selenium.pom.pages.StorePage;
+import org.selenium.pom.utils.JacksonUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class MyFirstTestCase extends BaseTest {
 
     @Test
-    public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException {
-        BillingAddress billingAddress = new BillingAddress().
-                setFirstName("demo").
-                setLastName("user").
-                setAddressLineOne("San Francisco").
-                setCity("San Francisco").
-                setPostalCode("94188").
-                setEmail("askomdch@gmail.com");
-        //or 72:
-        //BillingAddress billingAddress = new BillingAddress("demo", "user", "San Francisco", "San Francisco", "94188", "askomdch@gmail.com");
+    public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException, IOException {
+        BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
 
         StorePage storePage = new HomePage(driver).
                 load().

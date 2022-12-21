@@ -13,7 +13,7 @@ public class BillingAddress {
     public BillingAddress(String firstName, String lastName, String addressLineOne, String city, String postalCode, String email){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.addressLineOne = lastName;
+        this.addressLineOne = addressLineOne;
         this.city = city;
         this.postalCode = postalCode;
         this.email = email;
