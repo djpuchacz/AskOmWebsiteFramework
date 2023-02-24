@@ -69,7 +69,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage setBillingAddress(BillingAddress billingAddress){
-        enterFirstName(billingAddress.getFirstName()).
+                enterFirstName(billingAddress.getFirstName()).
                 enterLastName(billingAddress.getLastName()).
                 enterAddressLineOne(billingAddress.getAddressLineOne()).
                 enterCity(billingAddress.getCity()).
