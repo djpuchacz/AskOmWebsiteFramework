@@ -18,7 +18,7 @@ import java.io.InputStream;
 public class MyFirstTestCase extends BaseTest {
 
     @Test
-    public void guestCheckoutUsingDirectBankTransfer() throws InterruptedException, IOException {
+    public void guestCheckoutUsingDirectBankTransfer() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
@@ -30,9 +30,9 @@ public class MyFirstTestCase extends BaseTest {
         //Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
 
-        Thread.sleep(2000);
+
         storePage.clickAddToCartBtn(product.getName());
-        Thread.sleep(2000);
+
         CartPage cartPage = storePage.clickViewCart();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
@@ -40,12 +40,12 @@ public class MyFirstTestCase extends BaseTest {
                 checkout().
                 setBillingAddress(billingAddress).
                 placeOrder();
-        Thread.sleep(2000);
+
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
     }
 
     @Test
-    public void loginAndCheckoutUsingDirectBankTransfer() throws InterruptedException, IOException {
+    public void loginAndCheckoutUsingDirectBankTransfer() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
@@ -57,22 +57,22 @@ public class MyFirstTestCase extends BaseTest {
                 search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
 
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         storePage.clickAddToCartBtn(product.getName());
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         CartPage cartPage = storePage.clickViewCart();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
         CheckoutPage checkoutPage = cartPage.checkout();
         checkoutPage.clickHereToLoginLink();
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
 
         checkoutPage.
                 login(user.getUsername(), user.getPassword()).
                 setBillingAddress(billingAddress).
                 //enterEmail("askomdch1410@gmail.com").
                 placeOrder();
-        Thread.sleep(2000);
+        //Thread.sleep(2000);
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
     }
 }

@@ -19,8 +19,7 @@ public class StorePage extends BasePage {
         return this;
     }
 
-    public StorePage search(String txt) throws InterruptedException {
-        Thread.sleep(2000);
+    public StorePage search(String txt) {
         driver.findElement(searchFld).sendKeys(txt);
         driver.findElement(searchBtn).click();
         return this;
@@ -31,8 +30,7 @@ public class StorePage extends BasePage {
         return this;
     }
 
-    public String getTitle() throws InterruptedException {
-        Thread.sleep(2000);
+    public String getTitle() {
         return driver.findElement(title).getText();
     }
 
@@ -40,9 +38,8 @@ public class StorePage extends BasePage {
         return By.cssSelector("a[aria-label='Add “" + productName + "” to your cart']");
     }
 
-    public StorePage clickAddToCartBtn(String productName) throws InterruptedException {
+    public StorePage clickAddToCartBtn(String productName) {
         By addToCartBtn = getAddToCartBtnElement(productName);
-        Thread.sleep(2000);
         driver.findElement(addToCartBtn).click();
         return this;
     }
