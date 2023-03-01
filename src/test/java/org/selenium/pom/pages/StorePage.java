@@ -31,7 +31,10 @@ public class StorePage extends BasePage {
        wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
         return this;
     }
+    public Boolean isLoaded(){
+        return wait.until(ExpectedConditions.urlContains("/store"));
 
+    }
     public String getTitle() {
         return  wait.until(ExpectedConditions.visibilityOfElementLocated(title)).getText();
     }
