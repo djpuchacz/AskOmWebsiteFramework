@@ -27,21 +27,14 @@ public class CheckoutPage extends BasePage {
      private final By loginBtn = By.name("login");
      private final By overlay = By.cssSelector(".blockUI.blockOverlay");
 
-        //driver.findElement(By.id("billing_address_1")
-        //driver.findElement(By.id("billing_last_name")).sendKeys("user");
-        //driver.findElement(By.id("billing_address_1")).sendKeys("San Francisco");
-        //driver.findElement(By.id("billing_city")).sendKeys("San Francisco");
-        //driver.findElement(By.id("billing_postcode")).sendKeys("94188");
-        //driver.findElement(By.id("billing_email")).sendKeys("askomdch1410@gmail.com");
-        //driver.findElement(By.id("place_order")).click();
-
     public CheckoutPage(WebDriver driver) {
         super(driver);
     }
 
-    public CheckoutPage enterFirstName(String firstName){
-        driver.findElement(firstNameFld).clear();
-        driver.findElement(firstNameFld).sendKeys(firstName);
+    public CheckoutPage enterFirstName(String firstName){//89
+        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameFld));
+        e.clear();
+        e.sendKeys(firstName);
         return this;
     }
 
@@ -92,26 +85,27 @@ public class CheckoutPage extends BasePage {
     }
 
     public String getNotice(){
-        return driver.findElement(successNotice).getText();
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(successNotice)).getText();
     }
 
     public CheckoutPage clickHereToLoginLink(){
-        driver.findElement(clickHereToLoginLink).click();
-        return this;
+       wait.until(ExpectedConditions.elementToBeClickable(clickHereToLoginLink)).click();
+       return this;
+
     }
 
     public CheckoutPage enterUserName(String username){
-        driver.findElement(usernameFld).sendKeys(username);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameFld)).sendKeys(username);
         return this;
     }
 
     public CheckoutPage enterPassword(String password){
-        driver.findElement(passwordFld).sendKeys(password);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordFld)).sendKeys(password);
         return this;
     }
 
     public CheckoutPage clickLoginBtn(){
-        driver.findElement(loginBtn).click();
+        wait.until(ExpectedConditions.elementToBeClickable(loginBtn)).click();
         return this;
     }
 

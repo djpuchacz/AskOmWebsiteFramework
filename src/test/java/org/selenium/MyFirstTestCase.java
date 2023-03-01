@@ -25,15 +25,15 @@ public class MyFirstTestCase extends BaseTest {
 
         StorePage storePage = new HomePage(driver).
                 load().
-                navigateToStoreUsingMenu().
+                navigateToStoreUsingMenu().//91
+        //storePage.isLoaded();
                 search(searchFor);
-        //Assert.assertEquals(storePage.getTitle(), "Search results: “Blue”");
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
 
 
         storePage.clickAddToCartBtn(product.getName());
-
         CartPage cartPage = storePage.clickViewCart();
+        //cartPage.isLoaded();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
         CheckoutPage checkoutPage = cartPage.
@@ -53,26 +53,24 @@ public class MyFirstTestCase extends BaseTest {
 
         StorePage storePage = new HomePage(driver).
                 load().
-                navigateToStoreUsingMenu().
+                navigateToStoreUsingMenu().//91
+        //storePage.isLoaded();
                 search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
 
-        //Thread.sleep(2000);
         storePage.clickAddToCartBtn(product.getName());
-        //Thread.sleep(2000);
         CartPage cartPage = storePage.clickViewCart();
+        //cartPage.isLoaded();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
         CheckoutPage checkoutPage = cartPage.checkout();
         checkoutPage.clickHereToLoginLink();
-        //Thread.sleep(3000);
 
         checkoutPage.
                 login(user.getUsername(), user.getPassword()).
                 setBillingAddress(billingAddress).
                 //enterEmail("askomdch1410@gmail.com").
                 placeOrder();
-        //Thread.sleep(2000);
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
     }
 }

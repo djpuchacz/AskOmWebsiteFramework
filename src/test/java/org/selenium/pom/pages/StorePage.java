@@ -2,6 +2,7 @@ package org.selenium.pom.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.selenium.pom.base.BasePage;
 
 public class StorePage extends BasePage {
@@ -15,23 +16,27 @@ public class StorePage extends BasePage {
     }
 
     public StorePage enterTextInSearchFld(String txt){
-        driver.findElement(searchFld).sendKeys(txt);
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchFld)).sendKeys(txt);
+        //driver.findElement(searchFld).sendKeys(txt);
         return this;
     }
 
     public StorePage search(String txt) {
-        driver.findElement(searchFld).sendKeys(txt);
+       enterTextInSearchFld(txt).clickSearchBtn();
         driver.findElement(searchBtn).click();
         return this;
     }
 
     public StorePage clickSearchBtn(){
-        driver.findElement(searchBtn).click();
+       wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
         return this;
     }
+    public Boolean isLoaded(){
+        return wait.until(ExpectedConditions.urlContains("/store"));
 
+    }
     public String getTitle() {
-        return driver.findElement(title).getText();
+        return  wait.until(ExpectedConditions.visibilityOfElementLocated(title)).getText();
     }
 
     private By getAddToCartBtnElement(String productName){
@@ -40,12 +45,12 @@ public class StorePage extends BasePage {
 
     public StorePage clickAddToCartBtn(String productName) {
         By addToCartBtn = getAddToCartBtnElement(productName);
-        driver.findElement(addToCartBtn).click();
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartBtn)).click();
         return this;
     }
 
     public CartPage clickViewCart(){
-        driver.findElement(viewCartLink).click();
+        wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
         return new CartPage(driver);
     }
 }

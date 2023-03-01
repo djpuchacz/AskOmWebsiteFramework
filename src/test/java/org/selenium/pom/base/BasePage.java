@@ -10,10 +10,12 @@ import java.time.Duration;
 import java.util.List;
 
 public class BasePage { //for common objects
-    public WebDriver driver;
+    protected WebDriver driver;
+    protected  WebDriverWait wait;
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
     public void load(String endPoint) {
@@ -24,11 +26,15 @@ public class BasePage { //for common objects
         List<WebElement> overlays = driver.findElements(overlay);
         System.out.println("OVERLAY SIZE: " + overlays.size());
         if (overlays.size() > 0) {
-            new WebDriverWait(driver, Duration.ofSeconds(15)).until(ExpectedConditions.invisibilityOfAllElements(overlays));
+            wait.until(ExpectedConditions.invisibilityOfAllElements(overlays));
             System.out.println("OVERLAYS ARE INVISIBLE");
         }
         else{
             System.out.println("OVERLAYS NOT FOUND");
         }
     }
+   /* public WebElement waitForElementToBeVisible(By element){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(element));//89
+
+    }*/
 }
