@@ -1,4 +1,4 @@
-package org.selenium;
+package org.selenium.pom.tests;
 
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.BillingAddress;
@@ -29,6 +29,7 @@ public class MyFirstTestCase extends BaseTest {
         //storePage.isLoaded();
                 search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
+        //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
 
 
         storePage.clickAddToCartBtn(product.getName());
@@ -58,6 +59,7 @@ public class MyFirstTestCase extends BaseTest {
         //storePage.isLoaded();
                 search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
+        //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
 
         storePage.clickAddToCartBtn(product.getName());
         CartPage cartPage = storePage.clickViewCart();
