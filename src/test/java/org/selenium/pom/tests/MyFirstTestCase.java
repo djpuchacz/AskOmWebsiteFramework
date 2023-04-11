@@ -77,4 +77,37 @@ public class MyFirstTestCase extends BaseTest {
                 placeOrder();
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
     }
+
+    @Test
+    public void loginAndCheckoutUsingDirectBankTransferFalse() throws IOException {
+        String searchFor = "Blue";
+        BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
+        Product product = new Product(1215);
+        User user = new User("demouser1410", "demopwd");
+
+        StorePage storePage = new HomePage(driver).
+                load().
+                navigateToStoreUsingMenu().//91
+                //storePage.isLoaded();
+                        search(searchFor);
+        Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
+        //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
+
+        storePage.clickAddToCartBtn(product.getName());
+        CartPage cartPage = storePage.clickViewCart();
+        //cartPage.isLoaded();
+        Assert.assertEquals(cartPage.getProductName(), product.getName());
+
+        CheckoutPage checkoutPage = cartPage.checkout();
+        checkoutPage.clickHereToLoginLink();
+
+        checkoutPage.
+                login(user.getUsername(), user.getPassword()).
+                setBillingAddress(billingAddress).
+                //enterEmail("askomdch1410@gmail.com").
+                        selectDirectBankTransfer().
+                placeOrder();
+        Assert.assertEquals(checkoutPage.getNotice(),"Thank you handsome. Your order has been received.");
+    }
 }
+
