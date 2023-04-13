@@ -31,8 +31,8 @@ public class CheckoutPage extends BasePage {
      private final By countryDropDown = By.id("billing_country");
      private final By stateDropDown = By.id("billing_state");
 
-     private final By alternateCountryDropDown = By.id("select2-billing_country-conainer");
-     private final By alternateStateDropDown = By.id("select2-billing_country-conainer");
+     private final By alternateCountryDropDown = By.id("select2-billing_country-container");
+     private final By alternateStateDropDown = By.id("select2-billing_state-container");
 
      private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
 

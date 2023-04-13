@@ -7,14 +7,16 @@ import org.openqa.selenium.firefox.GeckoDriverInfo;
 
 public class DriverManager {
         public WebDriver initializeDriver() {
-            //System.setProperty("webdriver.gecko.driver","C:\Webdrivers\\geckodriver.exe");
+           /* //System.setProperty("webdriver.gecko.driver","C:\Webdrivers\\geckodriver.exe");
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             //options.addArguments("--headless=new");
             options.addArguments();
             WebDriver driver = new ChromeDriver(options);
-            //WebDriver driver = new ChromeDriver();
-            //WebDriver driver = new FirefoxDriver();
+            //WebDriver driver = new ChromeDriver();*/
+
+
+            WebDriver driver = new FirefoxDriver();
             driver.manage().window().maximize();
             return driver;
         }
