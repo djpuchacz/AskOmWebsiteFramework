@@ -4,14 +4,17 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.GeckoDriverInfo;
+import org.selenium.pom.constants.DriverType;
+
+import java.util.Locale;
 
 public class DriverManager {
         public WebDriver initializeDriver() {
             WebDriver driver;
-            String browser = System.getProperty("browser");
+            String browser = System.getProperty("browser", "CHROME");
 
-            switch (browser){
-                case "Chrome":
+            switch (DriverType.valueOf(browser)){
+                case CHROME:
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--remote-allow-origins=*");
                     //options.addArguments("--headless=new");
@@ -19,7 +22,7 @@ public class DriverManager {
                     driver = new ChromeDriver(options);
                     //driver = new ChromeDriver();
                     break;
-                case "Firefox":
+                case FIREFOX:
                     driver = new FirefoxDriver();
                     break;
                 default:
