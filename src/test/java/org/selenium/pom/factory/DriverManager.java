@@ -11,7 +11,7 @@ import java.util.Locale;
 public class DriverManager {
         public WebDriver initializeDriver() {
             WebDriver driver;
-            String browser = System.getProperty("browser", "CHROME");
+            String browser = System.getProperty("browser", "FIREFOX");
 
             switch (DriverType.valueOf(browser)){
                 case CHROME:
