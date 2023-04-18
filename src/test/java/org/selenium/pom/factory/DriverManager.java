@@ -2,7 +2,9 @@ package org.selenium.pom.factory;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.GeckoDriverInfo;
 import org.selenium.pom.constants.DriverType;
 
@@ -23,7 +25,13 @@ public class DriverManager {
                     //driver = new ChromeDriver();
                     break;
                 case FIREFOX:
-                    driver = new FirefoxDriver();
+                    FirefoxBinary firefoxBinary = new FirefoxBinary();
+                    FirefoxOptions option = new FirefoxOptions();
+                    option.setBinary(firefoxBinary);
+                    option.setHeadless(true);  // <-- headless set here
+                    driver = new FirefoxDriver(option);
+
+                    //driver = new FirefoxDriver();
                     break;
                 default:
                     throw new IllegalStateException("Invalid browser name: " + browser);
