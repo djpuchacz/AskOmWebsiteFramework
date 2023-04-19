@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class DriverManager {
         public WebDriver initializeDriver() {
-            WebDriver driver;
+            WebDriver driver = null;
             String browser = System.getProperty("browser", "FIREFOX");
 
             switch (DriverType.valueOf(browser)){
@@ -22,7 +22,7 @@ public class DriverManager {
                     //options.addArguments("--headless=new");
                     options.addArguments();
                     driver = new ChromeDriver(options);
-                    //driver = new ChromeDriver();
+                    //driver = new ChromeDriver();*/
                     break;
                 case FIREFOX:
                     FirefoxBinary firefoxBinary = new FirefoxBinary();
@@ -36,13 +36,6 @@ public class DriverManager {
                 default:
                     throw new IllegalStateException("Invalid browser name: " + browser);
             }
-           /* //System.setProperty("webdriver.gecko.driver","C:\Webdrivers\\geckodriver.exe");
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--remote-allow-origins=*");
-            //options.addArguments("--headless=new");
-            options.addArguments();
-            WebDriver driver = new ChromeDriver(options);
-            //WebDriver driver = new ChromeDriver();*/
 
             driver.manage().window().maximize();
             return driver;
