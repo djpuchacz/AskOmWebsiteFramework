@@ -19,7 +19,7 @@ public class DriverManager {
                 case CHROME:
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--remote-allow-origins=*");
-                    //options.addArguments("--headless=new");
+                    options.addArguments("--headless=new");
                     options.addArguments();
                     driver = new ChromeDriver(options);
                     //driver = new ChromeDriver();*/
