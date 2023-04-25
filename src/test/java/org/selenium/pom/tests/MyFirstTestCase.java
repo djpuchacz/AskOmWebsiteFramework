@@ -79,7 +79,7 @@ public class MyFirstTestCase extends BaseTest {
     }
 
     @Test
-    public void loginAndCheckoutUsingDirectBankTransferFalse() throws IOException {
+    public void dummyTest() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
@@ -107,7 +107,7 @@ public class MyFirstTestCase extends BaseTest {
                 //enterEmail("askomdch1410@gmail.com").
                         selectDirectBankTransfer().
                 placeOrder();
-        Assert.assertNotEquals(checkoutPage.getNotice(),"Thank you handsome. Your order has been received.");
+        Assert.assertEquals(checkoutPage.getNotice(),"Thank you handsome. Your order has been received.");
     }
 }
 

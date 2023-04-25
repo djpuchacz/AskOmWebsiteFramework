@@ -13,14 +13,14 @@ import java.util.Locale;
 public class DriverManager {
         public WebDriver initializeDriver() {
             WebDriver driver = null;
-            String browser = System.getProperty("browser", "FIREFOX");
+            String browser = System.getProperty("browser", "CHROME");
 
             switch (DriverType.valueOf(browser)){
                 case CHROME:
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--remote-allow-origins=*");
                     //options.addArguments("--headless=new");
-                    options.addArguments();
+                    //options.addArguments();
                     driver = new ChromeDriver(options);
                     //driver = new ChromeDriver();*/
                     break;
@@ -28,7 +28,7 @@ public class DriverManager {
                     FirefoxBinary firefoxBinary = new FirefoxBinary();
                     FirefoxOptions option = new FirefoxOptions();
                     option.setBinary(firefoxBinary);
-                    option.setHeadless(true);  // <-- headless set here
+                    option.setHeadless(false);  // <-- headless set here
                     driver = new FirefoxDriver(option);
 
                     //driver = new FirefoxDriver();
