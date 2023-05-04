@@ -25,10 +25,9 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod
     public void startDriver(@Optional String browser){
-         browser = System.getProperty("browser", browser);
-  //      if(browser == null) browser = "CHROME";
+    if(browser == null) browser = "CHROME";
 
-        driver = new DriverManager().initializeDriver();
+        driver = new DriverManager().initializeDriver(browser);
     }
     @Parameters("browser")
     @AfterMethod

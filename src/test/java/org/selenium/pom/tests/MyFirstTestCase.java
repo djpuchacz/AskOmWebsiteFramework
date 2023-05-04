@@ -78,7 +78,7 @@ public class MyFirstTestCase extends BaseTest {
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
     }
 
-    @Test
+   @Test
     public void dummyTest() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
