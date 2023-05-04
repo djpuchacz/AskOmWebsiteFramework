@@ -11,9 +11,11 @@ import org.selenium.pom.constants.DriverType;
 import java.util.Locale;
 
 public class DriverManager {
-        public WebDriver initializeDriver() {
-            WebDriver driver = null;
-            String browser = System.getProperty("browser", "FIREFOX");
+        public WebDriver initializeDriver(String browser) {
+            WebDriver driver;
+            browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110)
+
+            //browser = System.getProperty("browser", "FIREFOX");
 
             switch (DriverType.valueOf(browser)){
                 case CHROME:
