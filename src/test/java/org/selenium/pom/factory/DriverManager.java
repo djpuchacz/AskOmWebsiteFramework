@@ -30,7 +30,7 @@ public class DriverManager {
                     FirefoxBinary firefoxBinary = new FirefoxBinary();
                     FirefoxOptions option = new FirefoxOptions();
                     option.setBinary(firefoxBinary);
-                    option.setHeadless(true);  // <-- headless set here
+                    option.setHeadless(false);  // <-- headless set here
                     driver = new FirefoxDriver(option);
 
                     //driver = new FirefoxDriver();

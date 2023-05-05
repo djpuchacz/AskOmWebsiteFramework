@@ -11,10 +11,26 @@
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-  <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-<!--       in order to run via Terminal or CLI using Maven (mvn clean test) just activate above encoding (lessons 104, 108)-->
+          <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!--       in order to run via Terminal or CLI using Maven (mvn clean test) just activate above encoding (lessons 104, 108)-->
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
