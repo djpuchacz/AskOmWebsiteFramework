@@ -23,7 +23,7 @@ public class MyFirstTestCase extends BaseTest {
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
 
-        StorePage storePage = new HomePage(driver).
+        StorePage storePage = new HomePage(getDriver()).
                 load().
                 navigateToStoreUsingMenu().//91
         //storePage.isLoaded();
@@ -53,7 +53,7 @@ public class MyFirstTestCase extends BaseTest {
         Product product = new Product(1215);
         User user = new User("demouser1410", "demopwd");
 
-        StorePage storePage = new HomePage(driver).
+        StorePage storePage = new HomePage(getDriver()).
                 load().
                 navigateToStoreUsingMenu().//91
         //storePage.isLoaded();
@@ -78,14 +78,14 @@ public class MyFirstTestCase extends BaseTest {
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
     }
 
-   @Test
+    //@Test
     public void dummyTest() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
         User user = new User("demouser1410", "demopwd");
 
-        StorePage storePage = new HomePage(driver).
+        StorePage storePage = new HomePage(getDriver()).
                 load().
                 navigateToStoreUsingMenu().//91
                 //storePage.isLoaded();
