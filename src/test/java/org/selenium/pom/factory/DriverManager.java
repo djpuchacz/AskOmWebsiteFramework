@@ -13,9 +13,6 @@ import java.util.Locale;
 public class DriverManager {
         public WebDriver initializeDriver(String browser) {
             WebDriver driver;
-            browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110)
-
-            //browser = System.getProperty("browser", "FIREFOX");
 
             switch (DriverType.valueOf(browser)){
                 case CHROME:
@@ -30,7 +27,7 @@ public class DriverManager {
                     FirefoxBinary firefoxBinary = new FirefoxBinary();
                     FirefoxOptions option = new FirefoxOptions();
                     option.setBinary(firefoxBinary);
-                    option.setHeadless(true);  // <-- headless set here
+                    option.setHeadless(false);  // <-- headless set here
                     driver = new FirefoxDriver(option);
 
                     //driver = new FirefoxDriver();

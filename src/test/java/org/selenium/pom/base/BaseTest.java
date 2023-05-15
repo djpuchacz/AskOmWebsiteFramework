@@ -21,13 +21,24 @@ import java.io.IOException;
 import static java.sql.DriverManager.getDriver;
 
 public class BaseTest {
-    protected WebDriver driver;
+    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private void setDriver(WebDriver driver){ //121
+        this.driver.set(driver);
+    }
+    protected WebDriver getDriver() {
+        return this.driver.get();
+    }
     @Parameters("browser")
     @BeforeMethod
     public void startDriver(@Optional String browser){
-    if(browser == null) browser = "CHROME";
+        browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110)
 
-        driver = new DriverManager().initializeDriver(browser);
+        //browser = System.getProperty("browser", "FIREFOX");
+
+        if(browser == null) browser = "CHROME";
+        setDriver(new DriverManager().initializeDriver(browser));
+        System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
+
     }
     @Parameters("browser")
     @AfterMethod
@@ -37,8 +48,8 @@ public class BaseTest {
             //takeScreenshot(destFile);
             takeScreenshotUsingAShot(destFile); //185
         }
-
-        driver.quit();
+        System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
+        getDriver().quit();
     }
     //https://www.browserstack.com/guide/take-screenshots-in-selenium
     private void takeScreenshot(File destFile) throws IOException {
@@ -51,7 +62,7 @@ public class BaseTest {
     private void takeScreenshotUsingAShot(File destFile){
         Screenshot screenshot = new AShot()
                 .shootingStrategy(ShootingStrategies.viewportPasting(100))
-                .takeScreenshot(driver);
+                .takeScreenshot(getDriver());
         try{
             ImageIO.write(screenshot.getImage(), "PNG", destFile);
     }
