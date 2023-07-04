@@ -8,6 +8,7 @@ import org.selenium.pom.pages.CartPage;
 import org.selenium.pom.pages.CheckoutPage;
 import org.selenium.pom.pages.HomePage;
 import org.selenium.pom.pages.StorePage;
+import org.selenium.pom.utils.ConfigLoader;
 import org.selenium.pom.utils.JacksonUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -51,7 +52,7 @@ public class MyFirstTestCase extends BaseTest {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
-        User user = new User("demouser1410", "demopwd");
+        User user = new User(ConfigLoader.getInstance().getUserName(), ConfigLoader.getInstance().getPassword());
 
         StorePage storePage = new HomePage(getDriver()).
                 load().
@@ -83,7 +84,7 @@ public class MyFirstTestCase extends BaseTest {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
-        User user = new User("demouser1410", "demopwd");
+        User user = new User(ConfigLoader.getInstance().getUserName(), ConfigLoader.getInstance().getPassword());
 
         StorePage storePage = new HomePage(getDriver()).
                 load().
