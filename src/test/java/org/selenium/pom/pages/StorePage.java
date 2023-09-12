@@ -20,6 +20,10 @@ public class StorePage extends BasePage {
         //driver.findElement(searchFld).sendKeys(txt);
         return this;
     }
+    public StorePage load(){
+        load("/store");
+        return this;
+    }
 
     public StorePage search(String txt) {
        enterTextInSearchFld(txt).clickSearchBtn();

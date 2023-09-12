@@ -24,7 +24,7 @@ public class MyFirstTestCase extends BaseTest {
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
 
-        StorePage storePage = new HomePage(getDriver()).
+        StorePage storePage = new HomePage(getDriver()).//143
                 load().
                 navigateToStoreUsingMenu().//91
         //storePage.isLoaded();
