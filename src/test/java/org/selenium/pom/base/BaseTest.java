@@ -21,7 +21,7 @@ import java.io.IOException;
 import static java.sql.DriverManager.getDriver;
 
 public class BaseTest {
-    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+    private ThreadLocal<WebDriver> driver = new ThreadLocal<>();//121
     private void setDriver(WebDriver driver){ //121
         this.driver.set(driver);
     }
@@ -31,8 +31,8 @@ public class BaseTest {
     @Parameters("browser")
     @BeforeMethod
     public void startDriver(@Optional String browser){
-        browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110)
-        //browser = System.getProperty("browser", "CHROME");
+        //browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110)
+        browser = System.getProperty("browser", "FIREFOX"); // 110
         if(browser == null) browser = "CHROME";
         setDriver(new DriverManager().initializeDriver(browser));
         System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());

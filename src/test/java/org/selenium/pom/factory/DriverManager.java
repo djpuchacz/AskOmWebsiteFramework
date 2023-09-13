@@ -19,9 +19,9 @@ public class DriverManager {
                     ChromeOptions options = new ChromeOptions();
                     //options.addArguments("--remote-allow-origins=*");
                     //options.addArguments("--headless=new");
-                    //options.addArguments();
+                    options.addArguments();
                     driver = new ChromeDriver(options);
-                    //driver = new ChromeDriver();*/
+                    //driver = new ChromeDriver();
                     break;
                 case FIREFOX:
                     FirefoxBinary firefoxBinary = new FirefoxBinary();

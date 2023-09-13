@@ -32,7 +32,6 @@ public class MyFirstTestCase extends BaseTest {
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
         //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
 
-
         storePage.clickAddToCartBtn(product.getName());
         CartPage cartPage = storePage.clickViewCart();
         //cartPage.isLoaded();
