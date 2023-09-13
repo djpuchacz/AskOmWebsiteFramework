@@ -2,5 +2,6 @@ package org.selenium.pom.api.actions;
 
 public class DummyClass {
     public static void main(String[] args) {
-        new SignUpApi().getAccount();
+        //System.out.println(new SignUpApi().fetchRegisterNonceValueUsingGroovy()); //152
+        System.out.println(new SignUpApi().fetchRegisterNonceValueUsingJsoup());
     }}
