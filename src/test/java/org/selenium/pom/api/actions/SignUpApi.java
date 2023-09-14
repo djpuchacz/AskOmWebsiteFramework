@@ -54,8 +54,8 @@ public class SignUpApi {
         Headers headers = new Headers(header);
         HashMap<String, String> formParams = new HashMap<>();
         formParams.put("username", user.getUsername());
-        formParams.put("password", user.getPassword());
         formParams.put("email", user.getEmail());
+        formParams.put("password", user.getPassword());
         formParams.put("woocommerce-register-nonce", fetchRegisterNonceValueUsingJsoup());
         formParams.put("register", "Register");
 
@@ -71,7 +71,7 @@ public class SignUpApi {
                 log().all().
                 extract().
                 response();
-        if (response.getStatusCode() != 303){
+        if (response.getStatusCode() != 302){
             throw
                     new RuntimeException("Failed to register the account, HTTP Status Code: " + response.getStatusCode());
         }
