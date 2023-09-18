@@ -70,7 +70,7 @@ public class MyFirstTestCase extends BaseTest {
         checkoutPage.clickHereToLoginLink();
 
         checkoutPage.
-                login(user.getUsername(), user.getPassword()).
+                login(user).
                 setBillingAddress(billingAddress).
                 //enterEmail("askomdch1410@gmail.com").
                 selectDirectBankTransfer().
@@ -102,7 +102,7 @@ public class MyFirstTestCase extends BaseTest {
         checkoutPage.clickHereToLoginLink();
 
         checkoutPage.
-                login(user.getUsername(), user.getPassword()).
+                login(user).
                 setBillingAddress(billingAddress).
                 //enterEmail("askomdch1410@gmail.com").
                         selectDirectBankTransfer().
