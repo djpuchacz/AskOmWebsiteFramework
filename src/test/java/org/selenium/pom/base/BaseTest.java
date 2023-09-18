@@ -1,10 +1,13 @@
 package org.selenium.pom.base;
 
+import io.restassured.http.Cookies;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.selenium.pom.factory.DriverManager;
+import org.selenium.pom.utils.CookieUtils;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -13,6 +16,7 @@ import org.testng.annotations.Parameters;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -32,7 +36,7 @@ public class BaseTest {
     @BeforeMethod
     public void startDriver(@Optional String browser){
         //browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110)
-        browser = System.getProperty("browser", "FIREFOX"); // 110
+        browser = System.getProperty("browser", "CHROME"); // 110
         if(browser == null) browser = "CHROME";
         setDriver(new DriverManager().initializeDriver(browser));
         System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
@@ -48,6 +52,13 @@ public class BaseTest {
         System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
         getDriver().quit();
     }
+    public void injectCookiesToBrowser(Cookies cookies){
+        List<Cookie>seleniumCookies = new CookieUtils().convertRestAssuredCookiesToSeleniumCookies(cookies);
+        for(Cookie cookie: seleniumCookies){
+            getDriver().manage().addCookie(cookie);
+        }
+    }
+
     //https://www.browserstack.com/guide/take-screenshots-in-selenium
     private void takeScreenshot(File destFile) throws IOException {
         //TakesScreenshot takesScreenshot = (TakesScreenshot) getDriver();
@@ -65,7 +76,6 @@ public class BaseTest {
     }
         catch (IOException e){
             e.printStackTrace();
-
         }
     }
 }
