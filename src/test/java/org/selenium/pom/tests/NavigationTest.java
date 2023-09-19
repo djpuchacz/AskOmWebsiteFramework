@@ -10,7 +10,7 @@ import static java.sql.DriverManager.getDriver;
 
 public class NavigationTest extends BaseTest {
     @Test
-    public void NavigateFromHomeToStoreUsingMainMenu(){
+    public void navigateFromHomeToStoreUsingMainMenu(){
         StorePage storePage = new HomePage(getDriver()).
                 load().
                 navigateToStoreUsingMenu();//91
