@@ -37,6 +37,7 @@ public class CheckoutPage extends BasePage {
 
     private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
     private final By productName = By.cssSelector("td[class='product-name']");
+    private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -164,5 +165,8 @@ public class CheckoutPage extends BasePage {
 
     public String getProductName() { //161
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productName)).getText();
+    }
+    public String getErrorText() { //161
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorText)).getText();
     }
 }

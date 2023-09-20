@@ -40,4 +40,29 @@ public class LoginTest extends BaseTest {
 
         Assert.assertTrue(checkoutPage.getProductName().contains(product.getName()));
     }
+    @Test
+    public void loginFailsWithNotRegisteredUserName() throws IOException{ //165
+        String userName = "demouser" + new FakerUtils().generateRandomNumber(); //user account create
+        User user = new User().
+                setUsername(userName).
+                setPassword("demopwd").
+                setEmail(userName + "@askomdch.com");
+
+        CartApi cartApi = new CartApi(); //add product to a card as a guest
+        Product product = new Product(1215);
+        cartApi.addToCart(product.getId(), 3);
+
+        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+        injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting in order to proceed checkout - basket can't be empty
+        checkoutPage.load();
+        checkoutPage.
+                clickHereToLoginLink().
+                login(user);
+
+        System.out.println(checkoutPage.getErrorText());
+        System.out.println("Error: " + "The username "+ user.getUsername() + " is not registered on this site. If you are unsure of your username, try your email address instead.");
+
+        Assert.assertTrue(checkoutPage.getErrorText().contains("Error: " + "The username "+ user.getUsername() + " is not registered on this site. If you are unsure of your username, try your email address instead."));
+
+    }
 }
