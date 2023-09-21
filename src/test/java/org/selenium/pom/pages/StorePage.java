@@ -4,6 +4,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.selenium.pom.base.BasePage;
+import org.selenium.pom.objects.Product;
+
+import java.io.IOException;
 
 public class StorePage extends BasePage {
     private final By searchFld = By.id("woocommerce-product-search-field-0");
@@ -56,5 +59,10 @@ public class StorePage extends BasePage {
     public CartPage clickViewCart(){
         wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
         return new CartPage(driver);
+    }
+
+    public ProductPage navigateToTheProduct(int id) throws IOException {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h2[normalize-space()='"+ new Product(id).getName() + "']"))).click();
+        return new ProductPage(driver);
     }
 }
