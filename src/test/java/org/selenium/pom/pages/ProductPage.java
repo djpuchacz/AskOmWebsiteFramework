@@ -20,5 +20,11 @@ public class ProductPage extends BasePage {
         driver.findElement(addToCartBtn).click();
         return this;
     }
-
+    public ProductPage loadProduct(String productNameSeparatedByDash){
+        load("/product/" + productNameSeparatedByDash + "/");
+        return this;
+    }
+    public String getAlert(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(alert)).getText();
+    }
 }
