@@ -5,8 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.selenium.pom.objects.Product;
+import org.selenium.pom.pages.ProductPage;
 import org.selenium.pom.utils.ConfigLoader;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 
@@ -34,8 +37,8 @@ public class BasePage { //for common objects
             System.out.println("OVERLAYS NOT FOUND");
         }
     }
-   /* public WebElement waitForElementToBeVisible(By element){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(element));//89
-
-    }*/
+    public ProductPage navigateToTheProduct(int id) throws IOException {
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h2[normalize-space()='"+ new Product(id).getName() + "']"))).click();
+        return new ProductPage(driver);
+    }
 }

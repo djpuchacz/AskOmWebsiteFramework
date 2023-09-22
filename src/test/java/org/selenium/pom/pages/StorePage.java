@@ -60,9 +60,4 @@ public class StorePage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
         return new CartPage(driver);
     }
-
-    public ProductPage navigateToTheProduct(int id) throws IOException {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h2[normalize-space()='"+ new Product(id).getName() + "']"))).click();
-        return new ProductPage(driver);
-    }
 }

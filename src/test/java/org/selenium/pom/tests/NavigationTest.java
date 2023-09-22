@@ -30,4 +30,13 @@ public class NavigationTest extends BaseTest {
                 navigateToTheProduct(product.getId());
         Assert.assertEquals(productPage.getProductTitle(), product.getName());
     }
+    @Test
+    public void navigateFromHomeToFeaturedProduct() throws IOException, InterruptedException {
+        Product product = new Product(1215);
+        ProductPage productPage = new HomePage(getDriver()).
+                load().
+                navigateToTheProduct(product.getId());
+        Thread.sleep(5000);
+        Assert.assertEquals(productPage.getProductTitle(), product.getName());
+    }
 }
