@@ -60,4 +60,8 @@ public class StorePage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
         return new CartPage(driver);
     }
+    public ProductPage searchExactMatch(String txt){
+        enterTextInSearchFld(txt).clickSearchBtn();
+        return new ProductPage(driver);
+    }
 }
