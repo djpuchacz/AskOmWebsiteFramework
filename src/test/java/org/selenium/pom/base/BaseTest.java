@@ -33,17 +33,7 @@ public class BaseTest {
         return this.driver.get();
     }
 
-
-    @BeforeMethod
-    public void startDriver(@Optional String browser){
-        //browser = System.getProperty("browser", "CHROME"); // 110
-        browser = System.getProperty("browser", browser );
-        if(browser == null) browser = "CHROME";
-        setDriver(new DriverManager().initializeDriver(browser));
-    }
-
-
-   /* @Parameters("browser")
+    @Parameters("browser")
     @BeforeMethod
     public void startDriver(@Optional String browser){
         browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110), 164
@@ -51,7 +41,8 @@ public class BaseTest {
         if(browser == null) browser = "CHROME";
         setDriver(new DriverManager().initializeDriver(browser));
         System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
-    }*/
+    }
+
     @Parameters("browser")
     @AfterMethod
     public void quitDriver(@Optional String browser, ITestResult result) throws IOException {

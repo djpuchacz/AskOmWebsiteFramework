@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.selenium.pom.objects.Product;
+import org.selenium.pom.pages.CartPage;
 import org.selenium.pom.pages.ProductPage;
 import org.selenium.pom.utils.ConfigLoader;
 
@@ -16,6 +17,7 @@ import java.util.List;
 public class BasePage { //for common objects
     protected WebDriver driver;
     protected  WebDriverWait wait;
+    private final By viewCartLink = By.cssSelector("a[title='View cart']");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;

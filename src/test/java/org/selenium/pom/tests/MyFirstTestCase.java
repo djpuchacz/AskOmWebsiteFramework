@@ -18,7 +18,7 @@ import java.io.InputStream;
 
 public class MyFirstTestCase extends BaseTest {
 
-    //@Test
+    /*//@Test
     public void guestCheckoutUsingDirectBankTransfer() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
@@ -44,9 +44,9 @@ public class MyFirstTestCase extends BaseTest {
                 placeOrder();
 
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
-    }
+    }*/
 
-    //@Test
+   /* //@Test
     public void loginAndCheckoutUsingDirectBankTransfer() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
@@ -76,10 +76,10 @@ public class MyFirstTestCase extends BaseTest {
                 selectDirectBankTransfer().
                 placeOrder();
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
-    }
+    }*/
 
     //@Test
-    public void dummyTest() throws IOException {
+    /*public void dummyTest() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
@@ -108,6 +108,6 @@ public class MyFirstTestCase extends BaseTest {
                         selectDirectBankTransfer().
                 placeOrder();
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you handsome. Your order has been received.");
-    }
+    }*/
 }
 
