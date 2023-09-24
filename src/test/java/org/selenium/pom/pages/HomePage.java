@@ -10,10 +10,9 @@ public class HomePage extends BasePage {
     public ProductThumbnail productThumbnail;
     private final By storeMenuLink = By.cssSelector("li[id='menu-item-1227'] a[class='menu-link']");
     private final By viewCartLink = By.cssSelector("a[title='View cart']");
+    String productName;
 
-    private By getAddToCartBtnElement(String productName){
-        return By.cssSelector("a[aria-label='Add “" + productName + "” to your cart']");
-    }
+
 
     public HomePage(WebDriver driver) {
         super(driver);
@@ -34,5 +33,22 @@ public class HomePage extends BasePage {
     }
     public ProductThumbnail getProductThumbnail() {
         return productThumbnail;
+    }
+   /* public String getTitle() {
+        return  wait.until(ExpectedConditions.visibilityOfElementLocated(title)).getText();
+    }*/
+
+
+    public HomePage clickAddToCartBtn(String productName) {
+        By addToCartBtn = getAddToCartBtnElement(productName);
+        wait.until(ExpectedConditions.elementToBeClickable(addToCartBtn)).click();
+        return this;
+    }
+    private By getAddToCartBtnElement(String productName){
+        return By.cssSelector("a[aria-label='Add “" + productName + "” to your cart']");
+    }
+    public CartPage clickViewCart() {
+        wait.until(ExpectedConditions.elementToBeClickable(viewCartLink)).click();
+        return new CartPage(driver);
     }
 }

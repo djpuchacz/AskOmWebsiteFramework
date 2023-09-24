@@ -1,4 +1,4 @@
-package org.selenium.pom.api.actions;
+package org.selenium.pom.api;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
