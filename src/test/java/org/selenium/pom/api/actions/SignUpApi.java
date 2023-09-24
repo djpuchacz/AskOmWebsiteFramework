@@ -7,6 +7,7 @@ import io.restassured.response.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.selenium.pom.constants.EndPoint;
 import org.selenium.pom.objects.User;
 import org.selenium.pom.utils.ConfigLoader;
 
@@ -37,7 +38,7 @@ public class SignUpApi {
                 cookies(cookies).
                 log().all().
         when().
-                get("/account").
+                get(EndPoint.ACCOUNT.url).
         then().
                 log().all().
                 extract().
@@ -66,7 +67,7 @@ public class SignUpApi {
                 cookies(cookies).
                 log().all().
                 when().
-                post("/account").
+                post(EndPoint.ACCOUNT.url).
                 then().
                 log().all().
                 extract().
