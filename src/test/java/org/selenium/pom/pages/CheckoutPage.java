@@ -5,14 +5,9 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.User;
-
-import java.time.Duration;
-import java.util.List;
 
 public class CheckoutPage extends BasePage {
     private final By firstNameFld = By.id("billing_first_name");
@@ -36,6 +31,7 @@ public class CheckoutPage extends BasePage {
     private final By alternateStateDropDown = By.id("select2-billing_state-container");
 
     private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
+    private final By cashOnDeliveryBtn = By.cssSelector(".wc_payment_method.payment_method_cod");
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
 
@@ -163,9 +159,18 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
+    public CheckoutPage selectCashOnDelivery(){
+        WebElement e = wait.until(ExpectedConditions.elementToBeClickable(cashOnDeliveryBtn));
+        if (!e.isSelected()) {
+            e.click();
+        }
+        return this;
+    }
+
     public String getProductName() { //161
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productName)).getText();
     }
+
     public String getErrorText() { //161
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorText)).getText();
     }

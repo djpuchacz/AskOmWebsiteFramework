@@ -33,7 +33,7 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test
-    public void loginAndCheckoutUsingDirectBankTransfer() throws IOException, InterruptedException { //163
+    public void loginAndCheckoutUsingDirectBankTransfer() throws IOException { //163
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         String userName = "demouser" + new FakerUtils().generateRandomNumber(); //user account create
         User user = new User().
@@ -49,11 +49,26 @@ public class CheckoutTest extends BaseTest {
         cartApi.addToCart(product.getId(), 3);
 
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
-        //Thread.sleep(5000);
         injectCookiesToBrowser(signUpApi.getCookies()); //cookies injecting in order to log in
         checkoutPage.load().
                 setBillingAddress(billingAddress).
                 selectDirectBankTransfer().
+                placeOrder();
+
+        Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
+    }
+    @Test
+    public void guestCheckoutUsingCashOnDelivery() throws IOException {
+        BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
+        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+
+        CartApi cartApi = new CartApi();
+        cartApi.addToCart(1215, 3);
+        injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
+
+        checkoutPage.load().
+                setBillingAddress(billingAddress).
+                selectCashOnDelivery().
                 placeOrder();
 
         Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
