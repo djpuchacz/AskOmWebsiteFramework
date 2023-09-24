@@ -37,7 +37,7 @@ public class BaseTest {
     @BeforeMethod
     public void startDriver(@Optional String browser){
         browser = System.getProperty("browser", browser ); // 113 use for JVM argument or Maven property (110), 164
-        //browser = System.getProperty("browser", "CHROME"); // 110
+        //browser = System.getProperty("browser", "FIREFOX"); // 110
         if(browser == null) browser = "CHROME";
         setDriver(new DriverManager().initializeDriver(browser));
         System.out.println("CURRENT THREAD: " + Thread.currentThread().getId() + ", " + "DRIVER = " + getDriver());
