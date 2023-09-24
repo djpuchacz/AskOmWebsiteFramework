@@ -67,8 +67,8 @@ public class CheckoutTest extends BaseTest {
         injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
 
         checkoutPage.load().
-                selectCashOnDelivery().
                 setBillingAddress(billingAddress).
+                selectCashOnDelivery().
                 placeOrder();
 
         Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
@@ -92,8 +92,8 @@ public class CheckoutTest extends BaseTest {
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
         injectCookiesToBrowser(signUpApi.getCookies()); //cookies injecting in order to log in
         checkoutPage.load().
-                selectCashOnDelivery().
                 setBillingAddress(billingAddress).
+                selectCashOnDelivery().
                 placeOrder();
 
         Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");

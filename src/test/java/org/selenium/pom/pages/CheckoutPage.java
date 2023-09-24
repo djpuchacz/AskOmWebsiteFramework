@@ -31,7 +31,8 @@ public class CheckoutPage extends BasePage {
     private final By alternateStateDropDown = By.id("select2-billing_state-container");
 
     private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
-    private final By cashOnDeliveryBtn = By.cssSelector(".wc_payment_method.payment_method_cod");
+    //private final By cashOnDeliveryBtn = By.cssSelector(".wc_payment_method.payment_method_cod");
+    private final By cashOnDeliveryBtn = By.id("payment_method_cod");
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
 
