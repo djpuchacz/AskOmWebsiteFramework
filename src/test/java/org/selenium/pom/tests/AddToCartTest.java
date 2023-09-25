@@ -1,5 +1,6 @@
 package org.selenium.pom.tests;
 
+import org.selenium.pom.DataProviders.MyDataProvider;
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.Product;
 import org.selenium.pom.pages.CartPage;
@@ -36,11 +37,8 @@ public class AddToCartTest extends BaseTest  { //145
         System.out.println(cartPage.getProductName());
         Assert.assertEquals(cartPage.getProductName(), product.getName());
     }
-    @DataProvider(name = "getFeaturedProducts", parallel = false) //171 set to false or remove parameter to seq. execution
-    public Object[] getFeaturedProducts() throws IOException {
-        return JacksonUtils.deserializeJson("products.json", Product[].class);
-    }
-    @Test(dataProvider = "getFeaturedProducts")
+
+    @Test(dataProvider = "getFeaturedProducts", dataProviderClass = MyDataProvider.class)
     public void addFeaturedProductToCardWithDataProvider(Product product) throws IOException { //167-170
         CartPage cartPage = new HomePage(getDriver()).
                 load().
