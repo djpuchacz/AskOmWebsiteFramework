@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import java.util.HashMap;
 import static io.restassured.RestAssured.given;
 
-public class ApiRequest extends org.selenium.pom.api.actions.SpecBuilder {
+public class ApiRequest extends SpecBuilder {
     public static Response post(String endPoint, Headers headers,
                                 HashMap<String, Object> formParams, Cookies cookies){
         return
