@@ -36,7 +36,7 @@ public class AddToCartTest extends BaseTest  { //145
         System.out.println(cartPage.getProductName());
         Assert.assertEquals(cartPage.getProductName(), product.getName());
     }
-    @DataProvider(name = "getFeaturedProducts", parallel = true) //171 set to false or remove parameter to seq. execution
+    @DataProvider(name = "getFeaturedProducts", parallel = false) //171 set to false or remove parameter to seq. execution
     public Object[] getFeaturedProducts() throws IOException {
         return JacksonUtils.deserializeJson("products.json", Product[].class);
     }
