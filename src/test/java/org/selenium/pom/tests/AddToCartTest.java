@@ -36,13 +36,17 @@ public class AddToCartTest extends BaseTest  { //145
         System.out.println(cartPage.getProductName());
         Assert.assertEquals(cartPage.getProductName(), product.getName());
     }
-    @Test
-    public void addFeaturedProductToCardWithDataProvider() throws IOException { //167
+    @DataProvider(name = "getFeaturedProducts", parallel = true) //171 set to false or remove parameter to seq. execution
+    public Object[] getFeaturedProducts() throws IOException {
+        return JacksonUtils.deserializeJson("products.json", Product[].class);
+    }
+    @Test(dataProvider = "getFeaturedProducts")
+    public void addFeaturedProductToCardWithDataProvider(Product product) throws IOException { //167-170
         CartPage cartPage = new HomePage(getDriver()).
                 load().
-                clickAddToCartBtn("Blue Shoes").
+                clickAddToCartBtn(product.getName()).
                 clickViewCart();
-        Assert.assertEquals(cartPage.getProductName(), "Blue Shoes");
+        Assert.assertEquals(cartPage.getProductName(), product.getName());
     }
     @Test
     public void addToCartFromProductPage() throws IOException {
@@ -53,9 +57,6 @@ public class AddToCartTest extends BaseTest  { //145
                 addToCart();
         Assert.assertTrue(productPage.getAlert().contains("“" + product.getName() +"” has been added to your cart."));
     }
-    @DataProvider(name = "getFeaturedProducts")
-    public Object[] getFeaturedProducts() throws IOException {
-        return JacksonUtils.deserializeJson("products.json", Product[].class);
-    }
+
 
 }
