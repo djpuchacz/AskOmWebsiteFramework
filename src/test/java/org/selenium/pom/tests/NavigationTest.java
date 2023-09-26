@@ -1,7 +1,5 @@
 package org.selenium.pom.tests;
 
-import org.openqa.selenium.WebDriver;
-import org.selenium.pom.base.BasePage;
 import org.selenium.pom.base.BaseTest;
 import org.selenium.pom.objects.Product;
 import org.selenium.pom.pages.HomePage;
@@ -12,13 +10,12 @@ import org.testng.annotations.Test;
 
 import java.io.IOException;
 
-import static java.sql.DriverManager.getDriver;
-
 public class NavigationTest extends BaseTest {
     @Test
     public void navigateFromHomeToStoreUsingMainMenu() {
         StorePage storePage = new HomePage(getDriver()).
                 load().
+                getMyHeader().
                 navigateToStoreUsingMenu();//91
         Assert.assertEquals(storePage.getTitle(), "Store");
     }

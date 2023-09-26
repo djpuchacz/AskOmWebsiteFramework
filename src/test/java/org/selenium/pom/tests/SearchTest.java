@@ -5,8 +5,6 @@ import org.selenium.pom.pages.StorePage;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import static java.sql.DriverManager.getDriver;
-
 public class SearchTest extends BaseTest { //144
     @Test
     public void searchWithPartialMatch(){

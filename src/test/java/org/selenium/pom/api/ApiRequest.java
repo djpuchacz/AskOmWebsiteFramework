@@ -1,8 +1,11 @@
 package org.selenium.pom.api;
+
 import io.restassured.http.Cookies;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
+
 import java.util.HashMap;
+
 import static io.restassured.RestAssured.given;
 
 public class ApiRequest extends SpecBuilder {

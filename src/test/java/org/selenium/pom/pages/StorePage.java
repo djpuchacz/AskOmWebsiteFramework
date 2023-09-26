@@ -4,10 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.selenium.pom.base.BasePage;
-import org.selenium.pom.objects.Product;
 import org.selenium.pom.pages.components.ProductThumbnail;
-
-import java.io.IOException;
 
 public class StorePage extends BasePage {
     private final By searchFld = By.id("woocommerce-product-search-field-0");
@@ -25,7 +22,6 @@ public class StorePage extends BasePage {
     }
     public StorePage enterTextInSearchFld(String txt){
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchFld)).sendKeys(txt);
-        //driver.findElement(searchFld).sendKeys(txt);
         return this;
     }
     public StorePage load(){
@@ -43,22 +39,10 @@ public class StorePage extends BasePage {
        wait.until(ExpectedConditions.elementToBeClickable(searchBtn)).click();
         return this;
     }
-    public Boolean isLoaded(){
-        return wait.until(ExpectedConditions.urlContains("/store"));
-
-    }
     public String getTitle() {
         return  wait.until(ExpectedConditions.visibilityOfElementLocated(title)).getText();
     }
 
-    private By getAddToCartBtnElement(String productName){
-        return By.cssSelector("a[aria-label='Add “" + productName + "” to your cart']");
-    }
 
-    public StorePage clickAddToCartBtn(String productName) {
-        By addToCartBtn = getAddToCartBtnElement(productName);
-        wait.until(ExpectedConditions.elementToBeClickable(addToCartBtn)).click();
-        return this;
-    }
 
 }
