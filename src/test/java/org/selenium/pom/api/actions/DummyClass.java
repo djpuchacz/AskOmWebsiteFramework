@@ -1,6 +1,5 @@
 package org.selenium.pom.api.actions;
 
-import com.github.javafaker.Faker;
 import org.selenium.pom.objects.User;
 import org.selenium.pom.utils.FakerUtils;
 

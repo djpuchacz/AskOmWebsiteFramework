@@ -16,13 +16,11 @@ import org.testng.annotations.Parameters;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-
-import static java.sql.DriverManager.getDriver;
+import java.util.List;
 
 public class BaseTest {
     private ThreadLocal<WebDriver> driver = new ThreadLocal<>();//121

@@ -14,11 +14,10 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public class MyFirstTestCase extends BaseTest {
 
-    /*//@Test
+    @Test
     public void guestCheckoutUsingDirectBankTransfer() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
@@ -26,14 +25,15 @@ public class MyFirstTestCase extends BaseTest {
 
         StorePage storePage = new HomePage(getDriver()).//143
                 load().
+                getMyHeader().
                 navigateToStoreUsingMenu().//91
         //storePage.isLoaded();
                 search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
         //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
 
-        storePage.clickAddToCartBtn(product.getName());
-        CartPage cartPage = storePage.clickViewCart();
+        storePage.getProductThumbnail().clickAddToCartBtn(product.getName());
+        CartPage cartPage = storePage.getProductThumbnail().clickViewCart();
         //cartPage.isLoaded();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
@@ -44,9 +44,9 @@ public class MyFirstTestCase extends BaseTest {
                 placeOrder();
 
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
-    }*/
+    }
 
-   /* //@Test
+   @Test
     public void loginAndCheckoutUsingDirectBankTransfer() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
@@ -54,15 +54,15 @@ public class MyFirstTestCase extends BaseTest {
         User user = new User(ConfigLoader.getInstance().getUserName(), ConfigLoader.getInstance().getPassword());
 
         StorePage storePage = new HomePage(getDriver()).
-                load().
+                load().getMyHeader().
                 navigateToStoreUsingMenu().//91
         //storePage.isLoaded();
                 search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
         //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
 
-        storePage.clickAddToCartBtn(product.getName());
-        CartPage cartPage = storePage.clickViewCart();
+        storePage.getProductThumbnail().clickAddToCartBtn(product.getName());
+        CartPage cartPage = storePage.getProductThumbnail().clickViewCart();
         //cartPage.isLoaded();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
@@ -76,25 +76,24 @@ public class MyFirstTestCase extends BaseTest {
                 selectDirectBankTransfer().
                 placeOrder();
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you. Your order has been received.");
-    }*/
+    }
 
-    //@Test
-    /*public void dummyTest() throws IOException {
+    @Test
+    public void dummyTest() throws IOException {
         String searchFor = "Blue";
         BillingAddress billingAddress = JacksonUtils.deserializeJson("myBillingAddress.json", BillingAddress.class);
         Product product = new Product(1215);
         User user = new User(ConfigLoader.getInstance().getUserName(), ConfigLoader.getInstance().getPassword());
 
         StorePage storePage = new HomePage(getDriver()).
-                load().
+                load().getMyHeader().
                 navigateToStoreUsingMenu().//91
                 //storePage.isLoaded();
                         search(searchFor);
         Assert.assertEquals(storePage.getTitle(), "Search results: “" + searchFor + "”");
-        //Assert.assertTrue(storePage.getTitle().contains("Search results: "));
 
-        storePage.clickAddToCartBtn(product.getName());
-        CartPage cartPage = storePage.clickViewCart();
+        storePage.getProductThumbnail().clickAddToCartBtn(product.getName());
+        CartPage cartPage = storePage.getProductThumbnail().clickViewCart();
         //cartPage.isLoaded();
         Assert.assertEquals(cartPage.getProductName(), product.getName());
 
@@ -108,6 +107,6 @@ public class MyFirstTestCase extends BaseTest {
                         selectDirectBankTransfer().
                 placeOrder();
         Assert.assertEquals(checkoutPage.getNotice(),"Thank you handsome. Your order has been received.");
-    }*/
+    }
 }
 

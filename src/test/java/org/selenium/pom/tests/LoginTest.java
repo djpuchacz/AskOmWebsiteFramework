@@ -37,7 +37,6 @@ public class LoginTest extends BaseTest {
                 clickHereToLoginLink().
                 login(user);
         Thread.sleep(5000);
-
         Assert.assertTrue(checkoutPage.getProductName().contains(product.getName()));
     }
     @Test
@@ -58,10 +57,6 @@ public class LoginTest extends BaseTest {
         checkoutPage.
                 clickHereToLoginLink().
                 login(user);
-
-        System.out.println(checkoutPage.getErrorText());
-        System.out.println("Error: " + "The username "+ user.getUsername() + " is not registered on this site. If you are unsure of your username, try your email address instead.");
-
         Assert.assertTrue(checkoutPage.getErrorText().contains("Error: " + "The username "+ user.getUsername() + " is not registered on this site. If you are unsure of your username, try your email address instead."));
 
     }
