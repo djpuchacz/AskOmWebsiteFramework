@@ -16,7 +16,6 @@ import java.util.List;
 public class BasePage { //for common objects
     protected WebDriver driver;
     protected  WebDriverWait wait;
-    private final By viewCartLink = By.cssSelector("a[title='View cart']");
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
