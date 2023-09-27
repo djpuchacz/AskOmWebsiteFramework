@@ -1,9 +1,6 @@
 package org.selenium.pom.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.BillingAddress;
@@ -31,8 +28,10 @@ public class CheckoutPage extends BasePage {
     private final By alternateStateDropDown = By.id("select2-billing_state-container");
 
     private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
+
     //private final By cashOnDeliveryBtn = By.cssSelector(".wc_payment_method.payment_method_cod");
-    private final By cashOnDeliveryBtn = By.id("payment_method_cod");
+    //private final By cashOnDeliveryBtn = By.id("payment_method_cod");
+    private final By cashOnDeliveryBtn = By.xpath("//input[@id='payment_method_cod']");
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
 
@@ -145,11 +144,16 @@ public class CheckoutPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(loginBtn)).click();
         return this;
     }
+    private CheckoutPage waitForLoginBtnToDisappear(){
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(loginBtn));
+        return this;
+    }
 
     public CheckoutPage login(User user) {
         return enterUserName(user.getUsername()).
                 enterPassword(user.getPassword()).
-                clickLoginBtn();
+                clickLoginBtn().
+                waitForLoginBtnToDisappear();
     }
 
     public CheckoutPage selectDirectBankTransfer() { //94
@@ -160,13 +164,15 @@ public class CheckoutPage extends BasePage {
         return this;
     }
 
-    public CheckoutPage selectCashOnDelivery(){
+    public CheckoutPage selectCashOnDelivery() {
         WebElement e = wait.until(ExpectedConditions.elementToBeClickable(cashOnDeliveryBtn));
+        //WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(cashOnDeliveryBtn));
         if (!e.isSelected()) {
             e.click();
         }
         return this;
     }
+
 
     public String getProductName() { //161
         return wait.until(ExpectedConditions.visibilityOfElementLocated(productName)).getText();
