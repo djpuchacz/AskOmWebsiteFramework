@@ -98,4 +98,24 @@ public class CheckoutTest extends BaseTest {
 
         Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
     }
+    @Test
+    public void guestCheckoutUsingFreeshipCoupon() {
+        String freeShippingCode ="freeship";
+        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+
+        CartApi cartApi = new CartApi();
+        cartApi.addToCart(1215, 3);
+        injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
+
+        checkoutPage.load().
+                getAmountValue();
+
+        checkoutPage.load().
+                clickHereToEnterYourCode().
+                enterCode(freeShippingCode).
+                clickApplyCoupon();
+
+        Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
+        Assert.assertEquals(checkoutPage.getAmountValue(), "Coupon code applied successfully.");
+    }
 }

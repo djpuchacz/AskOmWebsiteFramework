@@ -6,6 +6,8 @@ import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.User;
 
+import static jdk.internal.agent.Agent.getText;
+
 public class CheckoutPage extends BasePage {
     private final By firstNameFld = By.id("billing_first_name");
     private final By lastNameFld = By.id("billing_last_name");
@@ -15,11 +17,15 @@ public class CheckoutPage extends BasePage {
     private final By billingEmailFld = By.id("billing_email");
     private final By placeOrderBtn = By.id("place_order");
     private final By successNotice = By.cssSelector(".woocommerce-notice");
+    private final By successCouponNotice = By.xpath("//div[@role='alert']");
 
     private final By clickHereToLoginLink = By.className("showlogin");
+    private final By clickHereToEnterYourCode = By.className("showcoupon");
     private final By usernameFld = By.id("username");
     private final By passwordFld = By.id("password");
+    private final By couponFld = By.id("coupon_code");
     private final By loginBtn = By.name("login");
+    private final By applyCouponBtn = By.name("apply_coupon");
     private final By overlay = By.cssSelector(".blockUI.blockOverlay");
     private final By countryDropDown = By.id("billing_country");
     private final By stateDropDown = By.id("billing_state");
@@ -34,6 +40,7 @@ public class CheckoutPage extends BasePage {
     private final By cashOnDeliveryBtn = By.xpath("//input[@id='payment_method_cod']");
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
+    private final By amountValue = By.xpath("//*[@id=\"order_review\"]/table/tfoot/tr[4]/td/strong/span/bdi/text()");
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -124,10 +131,27 @@ public class CheckoutPage extends BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(successNotice)).getText();
     }
 
+
     public CheckoutPage clickHereToLoginLink() {
         wait.until(ExpectedConditions.elementToBeClickable(clickHereToLoginLink)).click();
         return this;
 
+    }
+    public CheckoutPage clickHereToEnterYourCode() {
+        wait.until(ExpectedConditions.elementToBeClickable(clickHereToEnterYourCode)).click();
+        return this;
+
+    }
+    public CheckoutPage enterCode(String code) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(couponFld)).sendKeys(code);
+        return this;
+    }
+    public CheckoutPage clickApplyCoupon() {
+        wait.until(ExpectedConditions.elementToBeClickable(applyCouponBtn)).click();
+        return this;
+    }
+    public String getCouponAppliedSuccessNotice() {
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(successCouponNotice)).getText();
     }
 
     public CheckoutPage enterUserName(String username) {
@@ -144,6 +168,8 @@ public class CheckoutPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(loginBtn)).click();
         return this;
     }
+
+
     private CheckoutPage waitForLoginBtnToDisappear(){
         wait.until(ExpectedConditions.invisibilityOfElementLocated(loginBtn));
         return this;
@@ -180,5 +206,15 @@ public class CheckoutPage extends BasePage {
 
     public String getErrorText() { //161
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorText)).getText();
+    }
+
+    public String getAmountStringValue(){
+        return wait.until(ExpectedConditions.visibilityOfElementLocated(amountValue)).getText();
+    }
+    public double getAmountValue(){
+        return Double.parseDouble(getAmountStringValue());
+    }
+    public double calculateDiscount(){
+        return getAmountValue()-5.0;
     }
 }
