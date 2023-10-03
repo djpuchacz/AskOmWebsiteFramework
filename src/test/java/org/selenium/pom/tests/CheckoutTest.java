@@ -100,22 +100,23 @@ public class CheckoutTest extends BaseTest {
     }
     @Test
     public void guestCheckoutUsingFreeshipCoupon() {
-        String freeShippingCode ="freeship";
+        String freeShippingCode = "freeship";
+        double freeShippingValue = 5.0;
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
 
         CartApi cartApi = new CartApi();
         cartApi.addToCart(1215, 3);
         injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
 
-        checkoutPage.load().
-                getAmountValue();
 
         checkoutPage.load().
                 clickHereToEnterYourCode().
                 enterCode(freeShippingCode).
-                clickApplyCoupon();
-
+                clickApplyCoupon().
+                checkFreeShippingSelected();
+        System.out.println(checkoutPage.getAmountValue());
+        System.out.println(checkoutPage.calculateTotalSumWithFreeShipCoupon());
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
-        Assert.assertEquals(checkoutPage.getAmountValue(), "Coupon code applied successfully.");
+        Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSumWithFreeShipCoupon());
     }
 }

@@ -6,7 +6,6 @@ import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.User;
 
-import static jdk.internal.agent.Agent.getText;
 
 public class CheckoutPage extends BasePage {
     private final By firstNameFld = By.id("billing_first_name");
@@ -32,7 +31,6 @@ public class CheckoutPage extends BasePage {
 
     private final By alternateCountryDropDown = By.id("select2-billing_country-container");
     private final By alternateStateDropDown = By.id("select2-billing_state-container");
-
     private final By directBankTransferRadioBtn = By.id("payment_method_bacs");
 
     //private final By cashOnDeliveryBtn = By.cssSelector(".wc_payment_method.payment_method_cod");
@@ -40,7 +38,14 @@ public class CheckoutPage extends BasePage {
     private final By cashOnDeliveryBtn = By.xpath("//input[@id='payment_method_cod']");
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
-    private final By amountValue = By.xpath("//*[@id=\"order_review\"]/table/tfoot/tr[4]/td/strong/span/bdi/text()");
+
+    //basket values
+    private final By subTotalValue = By.xpath("//tr[@class='cart-subtotal']//bdi[1]");
+    private final By shippingStdValue = By.xpath("//tr[@class='woocommerce-shipping-totals shipping']//bdi[1]");
+    private final By taxValue = By.xpath("//tr[@class='tax-rate tax-rate-us-ca-ca-state-tax-1']//span[@class='woocommerce-Price-amount amount']");
+    //private final By taxValue = By.cssSelector("tr[class='tax-rate tax-rate-us-ca-ca-state-tax-1'] span[class='woocommerce-Price-amount amount']");
+    private final By amountValue = By.xpath("//tr[@class='order-total']//bdi[1]");
+
 
     public CheckoutPage(WebDriver driver) {
         super(driver);
@@ -207,14 +212,29 @@ public class CheckoutPage extends BasePage {
     public String getErrorText() { //161
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorText)).getText();
     }
+//get subtotal value
 
-    public String getAmountStringValue(){
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(amountValue)).getText();
+    public double getSubTotalValue(){
+        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(subTotalValue)).getText().substring(1));
     }
+    public double getStdShippingValue(){
+        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText().substring(1));
+    }
+    public double getTaxValue(){
+        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText().substring(1));
+    }
+
     public double getAmountValue(){
-        return Double.parseDouble(getAmountStringValue());
+        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(amountValue)).getText().substring(1));
     }
+    public boolean checkFreeShippingSelected(){
+        return wait.until(ExpectedConditions.elementToBeSelected(By.xpath("//input[@id='shipping_method_0_free_shipping2']")));
+    }
+
     public double calculateDiscount(){
         return getAmountValue()-5.0;
+    }
+    public double calculateTotalSumWithFreeShipCoupon(){
+        return getSubTotalValue()+getTaxValue();
     }
 }
