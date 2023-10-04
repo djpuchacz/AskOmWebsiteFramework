@@ -13,6 +13,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 public class CheckoutTest extends BaseTest {
     @Test
@@ -99,7 +100,7 @@ public class CheckoutTest extends BaseTest {
         Assert.assertEquals(checkoutPage.getNotice(), "Thank you. Your order has been received.");
     }
     @Test
-    public void guestCheckoutUsingFreeshipCoupon() {
+    public void guestCheckoutUsingFreeshipCoupon() throws ParseException {
         String freeShippingCode = "freeship";
         double freeShippingValue = 5.0;
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
@@ -115,8 +116,9 @@ public class CheckoutTest extends BaseTest {
                 clickApplyCoupon().
                 checkFreeShippingSelected();
         System.out.println(checkoutPage.getAmountValue());
-        System.out.println(checkoutPage.calculateTotalSumWithFreeShipCoupon());
+        System.out.println(checkoutPage.calculateTotalSum());
+        System.out.println(checkoutPage.checkFreeShippingSelected());
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
-        Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSumWithFreeShipCoupon());
+        Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSum());
     }
 }

@@ -6,6 +6,10 @@ import org.selenium.pom.base.BasePage;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.User;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+
 
 public class CheckoutPage extends BasePage {
     private final By firstNameFld = By.id("billing_first_name");
@@ -39,12 +43,13 @@ public class CheckoutPage extends BasePage {
     private final By productName = By.cssSelector("td[class='product-name']");
     private final By errorText = By.xpath("//div[@class='woocommerce-notices-wrapper']//li[1]");
 
-    //basket values
+    //basket values and radio buttons
     private final By subTotalValue = By.xpath("//tr[@class='cart-subtotal']//bdi[1]");
     private final By shippingStdValue = By.xpath("//tr[@class='woocommerce-shipping-totals shipping']//bdi[1]");
     private final By taxValue = By.xpath("//tr[@class='tax-rate tax-rate-us-ca-ca-state-tax-1']//span[@class='woocommerce-Price-amount amount']");
     //private final By taxValue = By.cssSelector("tr[class='tax-rate tax-rate-us-ca-ca-state-tax-1'] span[class='woocommerce-Price-amount amount']");
     private final By amountValue = By.xpath("//tr[@class='order-total']//bdi[1]");
+    private final By freeShippingRadioButton = By.xpath("//input[@id='shipping_method_0_free_shipping2']");
 
 
     public CheckoutPage(WebDriver driver) {
@@ -213,28 +218,55 @@ public class CheckoutPage extends BasePage {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorText)).getText();
     }
 //get subtotal value
+    //https://stackoverflow.com/questions/52332081/convert-input-double-or-float-value-into-us-currency-format-in-java
+    //https://www.javatpoint.com/internationalizing-currency
+    //https://copyprogramming.com/howto/how-to-format-number-as-currency-string-in-java?utm_content=cmp-true
+    //https://stackoverflow.com/questions/20351323/removing-dollar-and-comma-from-string
 
-    public double getSubTotalValue(){
-        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(subTotalValue)).getText().substring(1));
+
+    public double getSubTotalValue() throws ParseException {
+        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(subTotalValue)).getText();
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        Number number = format.parse(temp);
+        return Double.parseDouble(number.toString());
+        //return Double.parseDouble(.substring(1));
+
     }
-    public double getStdShippingValue(){
-        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText().substring(1));
+    public double getStdShippingValue() throws ParseException {
+        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText();
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        Number number = format.parse(temp);
+        return Double.parseDouble(number.toString());
+        //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText().substring(1));
     }
-    public double getTaxValue(){
-        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText().substring(1));
+    public double getTaxValue() throws ParseException {
+        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        Number number = format.parse(temp);
+        return Double.parseDouble(number.toString());
+        //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText().substring(1));
     }
 
-    public double getAmountValue(){
-        return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(amountValue)).getText().substring(1));
+    public double getAmountValue() throws ParseException {
+        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(amountValue)).getText();
+        //return Double.parseDouble(temp);
+
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        Number number = format.parse(temp);
+        return Double.parseDouble(number.toString());
+        //System.out.println(number.toString());
     }
     public boolean checkFreeShippingSelected(){
-        return wait.until(ExpectedConditions.elementToBeSelected(By.xpath("//input[@id='shipping_method_0_free_shipping2']")));
+        return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton));
     }
 
-    public double calculateDiscount(){
+    /*public double calculateDiscount(){
         return getAmountValue()-5.0;
-    }
-    public double calculateTotalSumWithFreeShipCoupon(){
-        return getSubTotalValue()+getTaxValue();
+    }*/
+    public double calculateTotalSum() throws ParseException {
+        if (checkFreeShippingSelected()) {
+            return getSubTotalValue()+getTaxValue();
+        }
+        return getSubTotalValue()+getStdShippingValue()+getTaxValue();
     }
 }
