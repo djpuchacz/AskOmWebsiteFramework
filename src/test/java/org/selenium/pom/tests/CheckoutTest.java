@@ -153,11 +153,16 @@ public class CheckoutTest extends BaseTest {
                 enterCode(offCartCode).
                 clickApplyCoupon();
 
-        System.out.println(checkoutPage.getAmountValue());
-        System.out.println(checkoutPage.calculateTotalSum(offCartCode));
+        System.out.println("Actual: " + checkoutPage.getAmountValue());
+        System.out.println("Expected: " + checkoutPage.calculateTotalSum(offCartCode));
         System.out.println(offCartCode);
+        System.out.println("shipping cost: " + checkoutPage.getStdShippingValue());
+        System.out.println("tax:" + checkoutPage.getTaxValue());
+
 
         //Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
         Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSum(offCartCode));
+        System.out.println("Actual: " + checkoutPage.getAmountValue());
+        System.out.println("Expected: " + checkoutPage.calculateTotalSum(offCartCode));
     }
 }

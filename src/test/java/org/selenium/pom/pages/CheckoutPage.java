@@ -59,6 +59,7 @@ public class CheckoutPage extends BasePage {
     private final By amountValue = By.xpath("//tr[@class='order-total']//bdi[1]");
     private final By freeShippingRadioButton = By.xpath("//input[@id='shipping_method_0_free_shipping2']");
     private final By offCart5Coupon = By.xpath("//th[normalize-space()='Coupon: offcart5']");
+    private final By off25Coupon = By.xpath("//th[normalize-space()='Coupon: off25']");
 
 
 
@@ -213,6 +214,7 @@ public class CheckoutPage extends BasePage {
     public CheckoutPage selectCashOnDelivery() {
         WebElement e = wait.until(ExpectedConditions.elementToBeClickable(cashOnDeliveryBtn));
         //WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(cashOnDeliveryBtn));
+        //elementToBeSelected
         if (!e.isSelected()) {
             e.click();
         }
@@ -250,11 +252,18 @@ public class CheckoutPage extends BasePage {
         //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText().substring(1));
     }
     public double getTaxValue() throws ParseException {
+        if(checkIfOnlyOff25CouponIsProvided()){
         String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
         return Double.parseDouble(number.toString());
         //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText().substring(1));
+    }
+        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        Number number = format.parse(temp);
+        return Double.parseDouble(number.toString());
+
     }
 
     public double getAmountValue() throws ParseException {
@@ -274,6 +283,9 @@ public class CheckoutPage extends BasePage {
     public boolean checkIfOnlyOffCart5CouponIsProvided(){
         return wait.until(ExpectedConditions.textToBe(offCart5Coupon, "Coupon: offcart5"));
     }
+    public boolean checkIfOnlyOff25CouponIsProvided(){
+        return wait.until(ExpectedConditions.textToBe(off25Coupon, "Coupon: off25"));
+    }
 
     /*public double calculateDiscount(){
         return getAmountValue()-5.0;
@@ -287,13 +299,14 @@ public class CheckoutPage extends BasePage {
     public double calculateTotalSum(String coupon) throws ParseException {
         switch (coupon) {
             case "freeship":
-                return getSubTotalValue() + getTaxValue();
+                //return getSubTotalValue() + getTaxValue();
             case "offcart5":
-                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+                //return getSubTotalValue() + getStdShippingValue() + getTaxValue();
             case "off25":
-                return getSubTotalValue() + getTaxValue();
+                return (0.75*(getSubTotalValue()) + getStdShippingValue() + getTaxValue());
+                //(0,75*135)+5+7,59
             default:
-                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+                return 3.14;
         }
     }
 
