@@ -1,14 +1,22 @@
 package org.selenium.pom.pages;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.selenium.pom.base.BasePage;
+import org.selenium.pom.constants.DriverType;
 import org.selenium.pom.objects.BillingAddress;
 import org.selenium.pom.objects.User;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 
 public class CheckoutPage extends BasePage {
@@ -50,6 +58,8 @@ public class CheckoutPage extends BasePage {
     //private final By taxValue = By.cssSelector("tr[class='tax-rate tax-rate-us-ca-ca-state-tax-1'] span[class='woocommerce-Price-amount amount']");
     private final By amountValue = By.xpath("//tr[@class='order-total']//bdi[1]");
     private final By freeShippingRadioButton = By.xpath("//input[@id='shipping_method_0_free_shipping2']");
+    private final By offCart5Coupon = By.xpath("//th[normalize-space()='Coupon: offcart5']");
+
 
 
     public CheckoutPage(WebDriver driver) {
@@ -181,7 +191,7 @@ public class CheckoutPage extends BasePage {
 
 
     private CheckoutPage waitForLoginBtnToDisappear(){
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(loginBtn));
+        wait.until(invisibilityOfElementLocated(loginBtn));
         return this;
     }
 
@@ -256,17 +266,35 @@ public class CheckoutPage extends BasePage {
         return Double.parseDouble(number.toString());
         //System.out.println(number.toString());
     }
+    //checking entered coupon
     public boolean checkFreeShippingSelected(){
         return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton));
+        //return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton).andThen(wait.until(ExpectedConditions.invisibilityOfElementLocated(offCart5Coupon)));
+    }
+    public boolean checkIfOnlyOffCart5CouponIsProvided(){
+        return wait.until(ExpectedConditions.textToBe(offCart5Coupon, "Coupon: offcart5"));
     }
 
     /*public double calculateDiscount(){
         return getAmountValue()-5.0;
     }*/
-    public double calculateTotalSum() throws ParseException {
-        if (checkFreeShippingSelected()) {
+    /*public double calculateTotalSum() throws ParseException {
+        if (checkFreeShippingSelected()) { //dodać only
             return getSubTotalValue()+getTaxValue();
         }
         return getSubTotalValue()+getStdShippingValue()+getTaxValue();
+    }*/
+    public double calculateTotalSum(String coupon) throws ParseException {
+        switch (coupon) {
+            case "freeship":
+                return getSubTotalValue() + getTaxValue();
+            case "offcart5":
+                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+            case "off25":
+                return getSubTotalValue() + getTaxValue();
+            default:
+                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+        }
     }
+
 }
