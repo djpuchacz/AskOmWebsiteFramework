@@ -101,7 +101,7 @@ public class CheckoutTest extends BaseTest {
     }
 
     @Test
-    public void guestCheckoutUsingFreeshipCoupon() throws ParseException {
+    public void guestCheckoutUsingFreeShippingCoupon() throws ParseException {
         String freeShippingCode = "freeship";
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
 
@@ -140,7 +140,7 @@ public class CheckoutTest extends BaseTest {
 
     Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");*/
     @Test
-    public void guestCheckoutUsingOffCart5CouponOnly() throws ParseException {
+    public void guestCheckoutUsingOff25CouponOnly() throws ParseException, InterruptedException {
         String offCartCode = "off25";
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
 
@@ -149,9 +149,13 @@ public class CheckoutTest extends BaseTest {
         injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
 
         checkoutPage.load().
+                calculateOrgSum();
+
+        checkoutPage.load().
                 clickHereToEnterYourCode().
                 enterCode(offCartCode).
                 clickApplyCoupon();
+
 
         System.out.println("Actual: " + checkoutPage.getAmountValue());
         System.out.println("Expected: " + checkoutPage.calculateTotalSum(offCartCode));

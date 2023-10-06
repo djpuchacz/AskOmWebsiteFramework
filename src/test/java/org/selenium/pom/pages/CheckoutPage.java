@@ -252,13 +252,14 @@ public class CheckoutPage extends BasePage {
         //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText().substring(1));
     }
     public double getTaxValue() throws ParseException {
-        if(checkIfOnlyOff25CouponIsProvided()){
+        /*if(checkIfOnlyOff25CouponIsProvided()){
         String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
         return Double.parseDouble(number.toString());
         //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText().substring(1));
-    }
+    }*/
+
         String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
@@ -287,6 +288,9 @@ public class CheckoutPage extends BasePage {
         return wait.until(ExpectedConditions.textToBe(off25Coupon, "Coupon: off25"));
     }
 
+    public void waitToRecalculateSumAfterEneteredCoupon() throws InterruptedException {
+        wait(2000);
+    }
     /*public double calculateDiscount(){
         return getAmountValue()-5.0;
     }*/
@@ -296,17 +300,23 @@ public class CheckoutPage extends BasePage {
         }
         return getSubTotalValue()+getStdShippingValue()+getTaxValue();
     }*/
+    public double calculateOrgSum() throws ParseException {
+                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+    }
+
     public double calculateTotalSum(String coupon) throws ParseException {
         switch (coupon) {
+            case "":
+                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
             case "freeship":
-                //return getSubTotalValue() + getTaxValue();
+                return getSubTotalValue() + getTaxValue();
             case "offcart5":
-                //return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+                return (getSubTotalValue() + getStdShippingValue() + getTaxValue()) - 5.0;
             case "off25":
                 return (0.75*(getSubTotalValue()) + getStdShippingValue() + getTaxValue());
                 //(0,75*135)+5+7,59
             default:
-                return 3.14;
+                return getSubTotalValue() ;
         }
     }
 
