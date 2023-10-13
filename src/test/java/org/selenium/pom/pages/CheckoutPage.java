@@ -17,6 +17,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 
 public class CheckoutPage extends BasePage {
@@ -62,7 +63,6 @@ public class CheckoutPage extends BasePage {
     private final By off25Coupon = By.xpath("//th[normalize-space()='Coupon: off25']");
 
 
-
     public CheckoutPage(WebDriver driver) {
         super(driver);
     }
@@ -73,7 +73,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage enterFirstName(String firstName) {//89
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(firstNameFld));
+        WebElement e = wait.until(visibilityOfElementLocated(firstNameFld));
         e.clear();
         e.sendKeys(firstName);
         return this;
@@ -124,7 +124,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public CheckoutPage enterEmail(String email) {
-        WebElement e = wait.until(ExpectedConditions.visibilityOfElementLocated(billingEmailFld));
+        WebElement e = wait.until(visibilityOfElementLocated(billingEmailFld));
         e.clear();
         e.sendKeys(email);
         return this;
@@ -149,7 +149,7 @@ public class CheckoutPage extends BasePage {
     }
 
     public String getNotice() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(successNotice)).getText();
+        return wait.until(visibilityOfElementLocated(successNotice)).getText();
     }
 
 
@@ -158,30 +158,34 @@ public class CheckoutPage extends BasePage {
         return this;
 
     }
+
     public CheckoutPage clickHereToEnterYourCode() {
         wait.until(ExpectedConditions.elementToBeClickable(clickHereToEnterYourCode)).click();
         return this;
 
     }
+
     public CheckoutPage enterCode(String code) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(couponFld)).sendKeys(code);
+        wait.until(visibilityOfElementLocated(couponFld)).sendKeys(code);
         return this;
     }
+
     public CheckoutPage clickApplyCoupon() {
         wait.until(ExpectedConditions.elementToBeClickable(applyCouponBtn)).click();
         return this;
     }
+
     public String getCouponAppliedSuccessNotice() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(successCouponNotice)).getText();
+        return wait.until(visibilityOfElementLocated(successCouponNotice)).getText();
     }
 
     public CheckoutPage enterUserName(String username) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(usernameFld)).sendKeys(username);
+        wait.until(visibilityOfElementLocated(usernameFld)).sendKeys(username);
         return this;
     }
 
     public CheckoutPage enterPassword(String password) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(passwordFld)).sendKeys(password);
+        wait.until(visibilityOfElementLocated(passwordFld)).sendKeys(password);
         return this;
     }
 
@@ -191,7 +195,7 @@ public class CheckoutPage extends BasePage {
     }
 
 
-    private CheckoutPage waitForLoginBtnToDisappear(){
+    private CheckoutPage waitForLoginBtnToDisappear() {
         wait.until(invisibilityOfElementLocated(loginBtn));
         return this;
     }
@@ -223,11 +227,11 @@ public class CheckoutPage extends BasePage {
 
 
     public String getProductName() { //161
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(productName)).getText();
+        return wait.until(visibilityOfElementLocated(productName)).getText();
     }
 
     public String getErrorText() { //161
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorText)).getText();
+        return wait.until(visibilityOfElementLocated(errorText)).getText();
     }
 //get subtotal value
     //https://stackoverflow.com/questions/52332081/convert-input-double-or-float-value-into-us-currency-format-in-java
@@ -235,32 +239,33 @@ public class CheckoutPage extends BasePage {
     //https://copyprogramming.com/howto/how-to-format-number-as-currency-string-in-java?utm_content=cmp-true
     //https://stackoverflow.com/questions/20351323/removing-dollar-and-comma-from-string
 
-
+    //checking entered coupon
+    public boolean checkFreeShippingSelected () {
+        return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton));
+    }
+    public boolean checkIfOnlyOffCart5CouponIsProvided () {
+        return wait.until(ExpectedConditions.textToBe(offCart5Coupon, "Coupon: offcart5"));
+    }
+    public boolean checkIfOnlyOff25CouponIsProvided () {
+        return wait.until(ExpectedConditions.textToBe(off25Coupon, "Coupon: off25"));
+    }
     public double getSubTotalValue() throws ParseException {
-        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(subTotalValue)).getText();
+        String temp = wait.until(visibilityOfElementLocated(subTotalValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
         return Double.parseDouble(number.toString());
-        //return Double.parseDouble(.substring(1));
-
     }
+
     public double getStdShippingValue() throws ParseException {
-        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText();
+        String temp = wait.until(visibilityOfElementLocated(shippingStdValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
         return Double.parseDouble(number.toString());
         //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(shippingStdValue)).getText().substring(1));
     }
-    public double getTaxValue() throws ParseException {
-        /*if(checkIfOnlyOff25CouponIsProvided()){
-        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        Number number = format.parse(temp);
-        return Double.parseDouble(number.toString());
-        //return Double.parseDouble(wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText().substring(1));
-    }*/
 
-        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(taxValue)).getText();
+    public double getTaxValue() throws ParseException {
+        String temp = wait.until(visibilityOfElementLocated(taxValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
         return Double.parseDouble(number.toString());
@@ -268,56 +273,40 @@ public class CheckoutPage extends BasePage {
     }
 
     public double getAmountValue() throws ParseException {
-        String temp = wait.until(ExpectedConditions.visibilityOfElementLocated(amountValue)).getText();
-        //return Double.parseDouble(temp);
+        String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
+        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+        Number number = format.parse(temp);
+        return Double.parseDouble(number.toString());
+    }
+
+    public double getNewAmountValue() throws ParseException {
+        if (checkIfOnlyOff25CouponIsProvided()) {
+            String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
+
+            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+            Number number = format.parse(temp);
+            return Double.parseDouble(number.toString());
+        }
+        String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
 
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
         Number number = format.parse(temp);
         return Double.parseDouble(number.toString());
-        //System.out.println(number.toString());
-    }
-    //checking entered coupon
-    public boolean checkFreeShippingSelected(){
-        return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton));
-        //return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton).andThen(wait.until(ExpectedConditions.invisibilityOfElementLocated(offCart5Coupon)));
-    }
-    public boolean checkIfOnlyOffCart5CouponIsProvided(){
-        return wait.until(ExpectedConditions.textToBe(offCart5Coupon, "Coupon: offcart5"));
-    }
-    public boolean checkIfOnlyOff25CouponIsProvided(){
-        return wait.until(ExpectedConditions.textToBe(off25Coupon, "Coupon: off25"));
     }
 
-    public void waitToRecalculateSumAfterEneteredCoupon() throws InterruptedException {
-        wait(2000);
-    }
-    /*public double calculateDiscount(){
-        return getAmountValue()-5.0;
-    }*/
-    /*public double calculateTotalSum() throws ParseException {
-        if (checkFreeShippingSelected()) { //dodać only
-            return getSubTotalValue()+getTaxValue();
-        }
-        return getSubTotalValue()+getStdShippingValue()+getTaxValue();
-    }*/
-    public double calculateOrgSum() throws ParseException {
-                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
-    }
-
-    public double calculateTotalSum(String coupon) throws ParseException {
-        switch (coupon) {
-            case "":
-                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
-            case "freeship":
-                return getSubTotalValue() + getTaxValue();
-            case "offcart5":
-                return (getSubTotalValue() + getStdShippingValue() + getTaxValue()) - 5.0;
-            case "off25":
-                return (0.75*(getSubTotalValue()) + getStdShippingValue() + getTaxValue());
-                //(0,75*135)+5+7,59
-            default:
-                return getSubTotalValue() ;
+        public double calculateTotalSum (String coupon) throws ParseException {
+            switch (coupon) {
+                case "":
+                    return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+                case "freeship":
+                    return getSubTotalValue() + getTaxValue();
+                case "offcart5":
+                    return (getSubTotalValue() + getStdShippingValue() + getTaxValue()) - 5.0;
+                case "off25":
+                    return ((getSubTotalValue() - 0.25 * (getSubTotalValue()) + getTaxValue() + getStdShippingValue()));
+                default:
+                    return getSubTotalValue();
+            }
         }
     }
 
-}

@@ -112,35 +112,31 @@ public class CheckoutTest extends BaseTest {
         checkoutPage.load().
                 clickHereToEnterYourCode().
                 enterCode(freeShippingCode).
-                clickApplyCoupon().
-                checkFreeShippingSelected();
-        System.out.println(checkoutPage.getAmountValue());
-        System.out.println(checkoutPage.calculateTotalSum(freeShippingCode));
-        System.out.println(checkoutPage.checkFreeShippingSelected());
+                clickApplyCoupon();
+
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
         Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSum(freeShippingCode));
     }
-//test na success message
-    /*@Test
-    public void successmessage() throws ParseException {
-    String offCartCode = "offcart5";
-    CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
-
-    CartApi cartApi = new CartApi();
-    cartApi.addToCart(1215, 3);
-    injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
-
-    checkoutPage.load().
-            clickHereToEnterYourCode().
-            enterCode(offCartCode).
-            clickApplyCoupon().
-            checkIfOnlyOffCart5CouponIsProvided();
-    System.out.println(checkoutPage.getAmountValue());
-    System.out.println(checkoutPage.calculateTotalSum());
-
-    Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");*/
     @Test
-    public void guestCheckoutUsingOff25CouponOnly() throws ParseException, InterruptedException {
+    public void guestCheckoutUsingOffcart5Coupon() throws ParseException {
+        String offCartCode = "offcart5";
+        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+
+        CartApi cartApi = new CartApi();
+        cartApi.addToCart(1215, 3);
+        injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
+
+        checkoutPage.load().
+                clickHereToEnterYourCode().
+                enterCode(offCartCode).
+                clickApplyCoupon();
+
+        Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
+        Assert.assertEquals(checkoutPage.getNewAmountValue(), checkoutPage.calculateTotalSum(offCartCode));
+    }
+
+    @Test
+    public void guestCheckoutUsingOff25Coupon() throws ParseException {
         String offCartCode = "off25";
         CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
 
@@ -149,24 +145,11 @@ public class CheckoutTest extends BaseTest {
         injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
 
         checkoutPage.load().
-                calculateOrgSum();
-
-        checkoutPage.load().
                 clickHereToEnterYourCode().
                 enterCode(offCartCode).
                 clickApplyCoupon();
 
-
-        System.out.println("Actual: " + checkoutPage.getAmountValue());
-        System.out.println("Expected: " + checkoutPage.calculateTotalSum(offCartCode));
-        System.out.println(offCartCode);
-        System.out.println("shipping cost: " + checkoutPage.getStdShippingValue());
-        System.out.println("tax:" + checkoutPage.getTaxValue());
-
-
-        //Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
-        Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSum(offCartCode));
-        System.out.println("Actual: " + checkoutPage.getAmountValue());
-        System.out.println("Expected: " + checkoutPage.calculateTotalSum(offCartCode));
+        Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
+        Assert.assertEquals(checkoutPage.getNewAmountValue(), checkoutPage.calculateTotalSum(offCartCode));
     }
 }
