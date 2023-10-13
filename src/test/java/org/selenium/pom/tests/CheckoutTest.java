@@ -115,7 +115,7 @@ public class CheckoutTest extends BaseTest {
                 clickApplyCoupon();
 
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
-        Assert.assertEquals(checkoutPage.getAmountValue() , checkoutPage.calculateTotalSum(freeShippingCode));
+        Assert.assertEquals(checkoutPage.getTotalValue(freeShippingCode) , checkoutPage.calculateTotalSum(freeShippingCode));
     }
     @Test
     public void guestCheckoutUsingOffcart5Coupon() throws ParseException {
@@ -132,7 +132,7 @@ public class CheckoutTest extends BaseTest {
                 clickApplyCoupon();
 
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
-        Assert.assertEquals(checkoutPage.getNewAmountValue(), checkoutPage.calculateTotalSum(offCartCode));
+        Assert.assertEquals(checkoutPage.getTotalValue(offCartCode), checkoutPage.calculateTotalSum(offCartCode));
     }
 
     @Test
@@ -150,6 +150,6 @@ public class CheckoutTest extends BaseTest {
                 clickApplyCoupon();
 
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
-        Assert.assertEquals(checkoutPage.getNewAmountValue(), checkoutPage.calculateTotalSum(offCartCode));
+        Assert.assertEquals(checkoutPage.getTotalValue(offCartCode), checkoutPage.calculateTotalSum(offCartCode));
     }
 }

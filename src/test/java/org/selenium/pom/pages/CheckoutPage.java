@@ -239,16 +239,7 @@ public class CheckoutPage extends BasePage {
     //https://copyprogramming.com/howto/how-to-format-number-as-currency-string-in-java?utm_content=cmp-true
     //https://stackoverflow.com/questions/20351323/removing-dollar-and-comma-from-string
 
-    //checking entered coupon
-    public boolean checkFreeShippingSelected () {
-        return wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton));
-    }
-    public boolean checkIfOnlyOffCart5CouponIsProvided () {
-        return wait.until(ExpectedConditions.textToBe(offCart5Coupon, "Coupon: offcart5"));
-    }
-    public boolean checkIfOnlyOff25CouponIsProvided () {
-        return wait.until(ExpectedConditions.textToBe(off25Coupon, "Coupon: off25"));
-    }
+
     public double getSubTotalValue() throws ParseException {
         String temp = wait.until(visibilityOfElementLocated(subTotalValue)).getText();
         NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
@@ -272,41 +263,49 @@ public class CheckoutPage extends BasePage {
 
     }
 
-    public double getAmountValue() throws ParseException {
-        String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        Number number = format.parse(temp);
-        return Double.parseDouble(number.toString());
-    }
-
-    public double getNewAmountValue() throws ParseException {
-        if (checkIfOnlyOff25CouponIsProvided()) {
-            String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
-
-            NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-            Number number = format.parse(temp);
-            return Double.parseDouble(number.toString());
-        }
-        String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
-
-        NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
-        Number number = format.parse(temp);
-        return Double.parseDouble(number.toString());
-    }
-
-        public double calculateTotalSum (String coupon) throws ParseException {
-            switch (coupon) {
-                case "":
-                    return getSubTotalValue() + getStdShippingValue() + getTaxValue();
-                case "freeship":
-                    return getSubTotalValue() + getTaxValue();
-                case "offcart5":
-                    return (getSubTotalValue() + getStdShippingValue() + getTaxValue()) - 5.0;
-                case "off25":
-                    return ((getSubTotalValue() - 0.25 * (getSubTotalValue()) + getTaxValue() + getStdShippingValue()));
-                default:
-                    return getSubTotalValue();
-            }
+    public double getTotalValue(String coupon) throws ParseException {
+        switch (coupon) {
+            case "freeship":
+                //wait.until(ExpectedConditions.textToBe(free, "Coupon: off25"));
+                wait.until(ExpectedConditions.elementToBeSelected(freeShippingRadioButton));
+                String free = wait.until(visibilityOfElementLocated(amountValue)).getText();
+                NumberFormat formatFree = NumberFormat.getCurrencyInstance(Locale.US);
+                Number numberFree = formatFree.parse(free);
+                return Double.parseDouble(numberFree.toString());
+            case "offcart5":
+                wait.until(ExpectedConditions.textToBe(offCart5Coupon, "Coupon: offcart5"));
+                String five = wait.until(visibilityOfElementLocated(amountValue)).getText();
+                NumberFormat formatFive = NumberFormat.getCurrencyInstance(Locale.US);
+                Number numberFive = formatFive.parse(five);
+                return Double.parseDouble(numberFive.toString());
+            case "off25":
+                wait.until(ExpectedConditions.textToBe(off25Coupon, "Coupon: off25"));
+                String twentyFive = wait.until(visibilityOfElementLocated(amountValue)).getText();
+                NumberFormat formatTwentyFive = NumberFormat.getCurrencyInstance(Locale.US);
+                Number numberTwentyFive = formatTwentyFive.parse(twentyFive);
+                return Double.parseDouble(numberTwentyFive.toString());
+            default:
+                String temp = wait.until(visibilityOfElementLocated(amountValue)).getText();
+                NumberFormat format = NumberFormat.getCurrencyInstance(Locale.US);
+                Number number = format.parse(temp);
+                return Double.parseDouble(number.toString());
         }
     }
+
+    public double calculateTotalSum(String coupon) throws ParseException {
+        switch (coupon) {
+            case "":
+                return getSubTotalValue() + getStdShippingValue() + getTaxValue();
+            case "freeship":
+                return getSubTotalValue() + getTaxValue();
+            case "offcart5":
+                return (getSubTotalValue() + getStdShippingValue() + getTaxValue()) - 5.0;
+            case "off25":
+                return ((getSubTotalValue() - 0.25 * (getSubTotalValue()) + getTaxValue() + getStdShippingValue()));
+            default:
+                return getSubTotalValue();
+        }
+    }
+}
+
 
