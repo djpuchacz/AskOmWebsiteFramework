@@ -10,10 +10,12 @@ import org.selenium.pom.pages.CheckoutPage;
 import org.selenium.pom.utils.FakerUtils;
 import org.selenium.pom.utils.JacksonUtils;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Iterator;
 
 public class CheckoutTest extends BaseTest {
     @Test
@@ -151,5 +153,29 @@ public class CheckoutTest extends BaseTest {
 
         Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
         Assert.assertEquals(checkoutPage.getTotalValue(offCartCode), checkoutPage.calculateTotalSum(offCartCode));
+    }
+    @DataProvider(name = "getCouponName")
+    public Object[][] couponName(){
+        return new Object [][] {
+            {"freeship"},
+            {"offcart5"},
+            {"off25"}
+        };
+    }
+    @Test(dataProvider = "getCouponName")
+    public void guestCheckoutUsingCoupon(String coupon) throws ParseException {
+        CheckoutPage checkoutPage = new CheckoutPage(getDriver()).load();
+
+        CartApi cartApi = new CartApi();
+        cartApi.addToCart(1215, 3);
+        injectCookiesToBrowser(cartApi.getCookies()); //cookies injecting
+
+        checkoutPage.load().
+                clickHereToEnterYourCode().
+                enterCode(coupon).
+                clickApplyCoupon();
+
+        Assert.assertEquals(checkoutPage.getCouponAppliedSuccessNotice(), "Coupon code applied successfully.");
+        Assert.assertEquals(checkoutPage.getTotalValue(coupon), checkoutPage.calculateTotalSum(coupon));
     }
 }
