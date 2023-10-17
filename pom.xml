@@ -24,6 +24,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0</version>
 <!--                115, 122 -->
+<!--                blal-->
                 <configuration>
                     <!--<parallel>methods</parallel>
                     <threadCount>2</threadCount>-->
